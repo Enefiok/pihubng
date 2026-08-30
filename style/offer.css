@@ -1,0 +1,1722 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: "poppins", sans-serif;
+}
+
+:root {
+  --primary-color: #fa7001;
+  --natural-color: white;
+}
+
+.page-link.active {
+  color: var(--primary-color);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    rgb(17, 15, 14),
+    rgba(40, 38, 36, 0.6) 100%
+  );
+  padding: 10px 7%;
+  box-shadow: 0px 2px 4px rgba(8, 8, 8, 0.8);
+  position: fixed; /* was sticky */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  transition:
+    padding 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+nav div {
+  display: flex;
+  gap: clamp(16px, 3vw, 40px); /* was 25% – caused overlap on mid screens */
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+nav .links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+nav .links a:hover {
+  color: var(--primary-color);
+}
+
+nav .links a:hover::after {
+  width: 100%;
+}
+
+nav #contactUs {
+  background-color: #fa7001;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+nav #contactUs:hover {
+  background-color: #e26400;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 10px rgba(250, 112, 1, 0.4);
+}
+
+nav span {
+  width: fit-content;
+}
+
+nav img {
+  width: 35px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+nav a:first-child:hover img {
+  transform: scale(1.08);
+}
+
+nav #menuToggle,
+nav #menuToggle:focus-visible {
+  display: none;
+}
+
+nav #menuToggle {
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+nav #menuToggle:hover {
+  color: var(--primary-color);
+  transform: rotate(90deg);
+}
+
+/* MOBILE MENU (hidden by default, only used under 767px) */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(75vw, 300px);
+  background: rgb(17, 15, 14);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 80px 30px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 200;
+}
+
+.mobileMenu.open {
+  transform: translateX(0);
+}
+
+.mobileMenu a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.mobileMenu #mobileContactUs {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  padding: 12px 20px;
+  text-align: center;
+  width: fit-content;
+}
+
+#menuClose {
+  color: white;
+  font-size: 150%;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
+
+.menuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 150;
+}
+
+.menuOverlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.heronav {
+  background:
+    linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
+    url("../src/image/profesional coders.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 450px;
+  width: 100%;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  color: white;
+  gap: 10px;
+  height: 100%;
+  opacity: 0;
+  animation: heroFadeUp 0.8s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero span {
+  width: 80px;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.hero:hover span {
+  transform: scale(1.05) rotate(-3deg);
+  box-shadow: 0 6px 16px rgba(250, 112, 1, 0.4);
+}
+
+.offer {
+  padding-inline: 5%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.options {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+
+  font-weight: 500;
+}
+
+/* REPLACE the .option-btn rules with this full version */
+.options span.option-btn {
+  cursor: pointer;
+  background-color: #f5f5f5;
+  color: #333;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  width: max-content;
+  padding: 8px 14px;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.options span.option-btn:hover {
+  background-color: #fdeadb;
+  color: #f88a44;
+}
+
+.options span.option-btn.active {
+  background-color: #fbc19c;
+  color: #f88a44;
+  transform: scale(1.03);
+}
+
+.options2 {
+  display: grid;
+  text-align: center;
+  margin-top: 80px;
+}
+
+.options2 > span:nth-child(1) {
+  font-weight: 700;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.options2 > span:nth-child(3) {
+  margin-top: 60px;
+  text-align: left;
+  border-left: 3px solid var(--primary-color);
+  padding-inline: 10px;
+  max-width: 1000px;
+  display: flex;
+  place-self: center;
+  font-size: 12px;
+}
+
+.options2[data-panel="courses"] .options3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: none;
+  justify-items: center;
+  align-items: start;
+}
+
+.options2[data-panel="courses"] .options3 .courseCard {
+  border: 2px solid #f5f5f5;
+  width: 300px;
+  height: fit-content;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.courseCard .cardPic1,
+.courseCard .cardPic2,
+.courseCard .cardPic3,
+.courseCard .cardPic4,
+.courseCard .cardPic5,
+.courseCard .cardPic6 {
+
+  height: 200px;
+  width: 100%;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; /* fills the box completely, no letterboxing — swap to "contain" if you'd rather see the whole image with empty space around it */
+}
+
+.cardPic1 { background-image: url("../src/image/Frontend Development.png"); }
+.cardPic2 { background-image: url("../src/image/UIUX Design.png"); }
+.cardPic3 { background-image: url("../src/image/Data Analysis.png"); }
+.cardPic4 { background-image: url("../src/image/Backend Development.jpg"); }
+.cardPic5 { background-image: url("../src/image/Backend Development.jpg"); }
+.cardPic6 { background-image: url("../src/image/Backend Development.jpg"); }
+
+.courseCard > div:nth-child(2) {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-left: 15px;
+}
+
+.courseCard > div:nth-child(3) {
+  font-size: 12px;
+  color: #5f5f5f;
+  margin-top: 20px;
+  margin-left: 15px;
+  text-align: left;
+}
+
+.courseCard > div:nth-child(4) {
+  border: 2px solid #f5f5f5;
+  border-radius: 20px;
+  width: max-content;
+  padding: 5px 10px;
+  color: #5f5f5f;
+  font-size: 10px;
+  display: flex;
+  place-items: center;
+  gap: 5px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.courseCard > div:nth-child(5) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-inline: 15px;
+  padding-block: 20px;
+}
+
+.courseCard > div:nth-child(5) span:first-child{
+  font-weight: 550;
+} 
+
+.courseCard > div:nth-child(5) span:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--natural-color);
+  font-size: 12px;
+  background-color: green;
+  border-radius: 10px;
+  height: 35px;
+  width: 200px;
+}
+
+.courseCard > div:nth-child(5) span:last-child:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.courseCard > div:nth-child(5) span:last-child i{
+  font-size: 16px;
+}
+
+/* ============================================================ */
+/* PLAN CARDS — select trigger                                  */
+/* ============================================================ */
+
+.selectBtn {
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.selectBtn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* ============================================================ */
+/* BOOKING FORM                                                 */
+/* ============================================================ */
+
+.bookingForm {
+  display: none;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 420px;
+  margin: 60px auto 0;
+  padding: 30px 28px;
+  border: 2px solid #f5f5f5;
+  border-radius: 16px;
+  text-align: left;
+  animation: panelFadeIn 0.4s ease;
+}
+
+.bookingForm.active {
+  display: flex;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+}
+
+.bookingForm-title {
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.bookingForm input {
+  height: 44px;
+  padding-inline: 14px;
+  border: 1.5px solid #ebebeb;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.bookingForm input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(250, 112, 1, 0.15);
+}
+
+.bookingForm input#planInput {
+  background-color: #fff8f3;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: not-allowed;
+}
+
+.bookingForm button {
+  height: 46px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.bookingForm button:hover {
+  background-color: #e26400;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(250, 112, 1, 0.4);
+}
+
+.bookingForm button:active {
+  transform: translateY(0);
+}
+
+.changePlan {
+  text-align: center;
+  font-size: 13px;
+  color: #5f5f5f;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.changePlan:hover {
+  color: var(--primary-color);
+}
+
+.options3 {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 160px;
+}
+
+.options3 > div span p:first-child {
+  width: fit-content;
+}
+
+.options3 > .planCard {
+  padding: 10px 20px;
+  display: grid;
+  justify-items: first baseline;
+  width: 300px;
+  aspect-ratio: 1;
+  border: 2px solid #ebebeb;
+  border-radius: 10px;
+  aspect-ratio: 1;
+}
+
+.options3 > div span:first-child {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.options3 > div span:first-child p:first-child img {
+  width: 20px;
+}
+
+.options3 > div span:first-child .popular {
+  background-color: #fbc19c;
+  color: #f88a44;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.options3 > div span:nth-child(4) {
+  display: flex;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.options3 > div span:nth-child(4) p:first-child {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.options3 > div span:nth-child(3) {
+  font-size: 12px;
+  color: #5f5f5f;
+  margin-top: 10px;
+}
+
+.options3 > div span:nth-child(4) p:last-child {
+  color: #5f5f5f;
+}
+
+.courseCard > div:nth-child(4) .time {
+  border: 2px solid #f5f5f5;
+  border-radius: 20px;
+  width: max-content;
+  padding: 5px 10px;
+  color: #5f5f5f;
+  font-size: 10px;
+  display: flex;
+  place-items: center;
+  gap: 5px;
+}
+
+.options3 > div span:nth-child(5) {
+  display: grid;
+  place-items: center;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
+  width: 100%;
+  margin-top: 30px;
+}
+
+.options3 > div span:nth-child(6),
+.options3 > div span:nth-child(7),
+.options3 > div span:nth-child(8) {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+  align-items: center;
+  font-size: 12px;
+}
+
+.options3 > div span:nth-child(6) i,
+.options3 > div span:nth-child(7) i,
+.options3 > div span:nth-child(8) i {
+  border-radius: 50%;
+  width: 25px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background-color: var(--primary-color);
+}
+
+.offer-panel {
+  display: none;
+}
+
+.offer-panel.active {
+  display: grid;
+  animation: panelFadeIn 0.4s ease;
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.privateCard {
+  width: 500px;
+  border: 2px solid #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.privateEnquiry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  border: 2px solid #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.privateAccess {
+  font-size: 12px;
+  color: #5f5f5f;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.privateName {
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.privateLogo p {
+  width: 20px;
+}
+
+.privateLogo p img {
+  width: 100%;
+}
+
+.privatePrice {
+  display: flex;
+  gap: 5px;
+}
+
+.privatePrice p:first-child {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.privatePrice p:last-child {
+  color: #5f5f5f;
+}
+
+.privateEnquiry-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* keeps both <p>s left-aligned as flex items */
+  text-align: left; /* actually aligns the text inside each <p> */
+  gap: 4px;
+}
+
+.privateEnquiry-text p:first-child {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.privateEnquiry-text p:last-child {
+  font-size: 12px;
+  color: #5f5f5f;
+}
+
+.privateEnquiry-btn {
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+align-items: center;
+justify-content: center;
+  gap: 5px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background-color: #2e8b57;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.privateEnquiry-btn i{
+  font-size:16px
+}
+
+.privateEnquiry-btn:hover {
+  background-color: #256e46;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(46, 139, 87, 0.4);
+}
+
+.privateEnquiry-btn:active {
+  transform: translateY(0);
+}
+
+.subscribe {
+  position: relative;
+  background-color: var(--natural-color);
+  height: 120px;
+}
+
+.subscribe > div {
+  background-color: black;
+  height: 100px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  color: white;
+  align-items: center;
+  gap: 3%;
+  position: absolute;
+  top: 50px;
+  left: 20%;
+  width: 60%;
+}
+
+.subscribe > div > input {
+  background-color: #5f5f5f;
+  border-radius: 20px;
+  padding: 10px 20px;
+  width: 330px;
+}
+
+.subscribe > div > input::placeholder {
+  color: #a7a3a3;
+  font-weight: 550;
+}
+
+.subscribe > div > button {
+  background-color: var(--primary-color);
+  width: 140px;
+  border-radius: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border: 2px solid transparent;
+}
+
+/* ============================================================ */
+/* SCROLL REVEAL                                                */
+/* ============================================================ */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.scroll-reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger plan cards and course cards so they cascade in, not pop together */
+.options3 > .planCard.scroll-reveal:nth-child(1) {
+  transition-delay: 0s;
+}
+.options3 > .planCard.scroll-reveal:nth-child(2) {
+  transition-delay: 0.12s;
+}
+.options3 > .planCard.scroll-reveal:nth-child(3) {
+  transition-delay: 0.24s;
+}
+
+.courseCard.scroll-reveal:nth-child(3n + 1) {
+  transition-delay: 0s;
+}
+.courseCard.scroll-reveal:nth-child(3n + 2) {
+  transition-delay: 0.1s;
+}
+.courseCard.scroll-reveal:nth-child(3n + 3) {
+  transition-delay: 0.2s;
+}
+
+
+
+/* ============================================================ */
+/* PLAN CARDS — lift + icon spin + price pop                    */
+/* ============================================================ */
+
+.options3 > .planCard {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.options3 > .planCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.options3 > .planCard img {
+  transition: transform 0.4s ease;
+}
+
+.options3 > .planCard:hover img {
+  transform: rotate(-12deg) scale(1.15);
+}
+
+.options3 > div span:nth-child(4) p:first-child {
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.options3 > .planCard:hover span:nth-child(4) p:first-child {
+  color: var(--primary-color);
+  transform: scale(1.06);
+}
+
+.popular {
+  animation: popularPulse 2s ease-in-out infinite;
+}
+
+@keyframes popularPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(251, 193, 156, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(251, 193, 156, 0);
+  }
+}
+
+.options3 > div span:nth-child(6),
+.options3 > div span:nth-child(7),
+.options3 > div span:nth-child(8) {
+  transition: transform 0.25s ease;
+}
+
+.options3 > div span:nth-child(6):hover,
+.options3 > div span:nth-child(7):hover,
+.options3 > div span:nth-child(8):hover {
+  transform: translateX(6px);
+}
+
+/* ============================================================ */
+/* PRIVATE / CONFERENCE / PODCAST CARDS                          */
+/* ============================================================ */
+
+.privateCard {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.privateCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================ */
+/* COURSE CARDS — image zoom + lift                              */
+/* ============================================================ */
+
+.options2[data-panel="courses"] .options3 .courseCard {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+.options2[data-panel="courses"] .options3 .courseCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.1);
+}
+
+.courseCard > div:nth-child(1) {
+  transition: transform 0.5s ease;
+}
+
+.courseCard:hover > div:nth-child(1) {
+  transform: scale(1.08);
+}
+
+.courseCard > div:nth-child(6) span:last-child {
+  transition:
+    background-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.courseCard > div:nth-child(6) span:last-child:hover {
+  background-color: #e26400;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 16px rgba(250, 112, 1, 0.35);
+}
+
+.courseCard .time {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.courseCard .time:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* ============================================================ */
+/* UNAVAILABLE COURSE CARDS                                     */
+/* ============================================================ */
+
+.courseCard.unavailable {
+  position: relative;
+}
+
+.courseCard.unavailable::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Fade the actual content underneath the overlay */
+.courseCard.unavailable > div {
+  opacity: 0.55;
+}
+
+/* Cancel the hover lift/zoom for unavailable cards — nothing to "engage" with */
+.courseCard.unavailable:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.courseCard.unavailable:hover > div:nth-child(1) {
+  transform: none;
+}
+
+/* Ash "Unavailable" button — overrides the primary-color button */
+.courseCard.unavailable > div:nth-child(5) span:last-child {
+  background-color: #9e9e9e;
+  color: #f0f0f0;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.courseCard.unavailable > div:nth-child(5) span:last-child:hover {
+  background-color: #9e9e9e;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================================ */
+/* SUBSCRIBE — input focus + button (button hover was missing)  */
+/* ============================================================ */
+
+.subscribe > div > input {
+  transition:
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.subscribe > div > input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+  background-color: #6b6b6b;
+}
+
+.subscribe > div > button {
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.subscribe > div > button:hover {
+  background-color: #e26400;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(250, 112, 1, 0.4);
+}
+
+.subscribe > div > button:active {
+  transform: translateY(0);
+}
+
+/* ============================================================ */
+/* BOOKING FORM — subtle shake on invalid submit (crazy idea)   */
+/* ============================================================ */
+
+.bookingForm.shake {
+  animation: formShake 0.4s ease;
+}
+
+@keyframes formShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.footer {
+  background-color: var(--primary-color);
+  padding-inline: 7%;
+  padding-top: 100px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap; /* was no-wrap by default, forced 4 columns at any width */
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 280px;
+}
+
+.footer div:nth-child(1) span:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 2.5vw, 20px);
+  color: var(--natural-color);
+  flex-wrap: wrap;
+  row-gap: 12px;
+  margin-left: -40px;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(1) {
+  background: url("../src/image/white p without background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: clamp(70px, 10vw, 150px);
+  flex-shrink: 0;
+  aspect-ratio: 1;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(2) {
+  width: 1px;
+  height: clamp(50px, 8vw, 100px);
+  border: 1.5px solid white;
+  flex-shrink: 0;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(1) {
+  font-size: clamp(28px, 6vw, 65px);
+  font-weight: bold;
+  display: block;
+  margin-left: 0px;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(2) {
+  font-size: clamp(13px, 2vw, 20px);
+}
+
+.footer div:nth-child(1) span:nth-child(2) {
+  width: 100%; /* was a fixed 400px */
+  max-width: 400px;
+  display: block;
+  color: var(--natural-color);
+  font-size: 14px;
+}
+
+.footer div:nth-child(1) span:nth-child(3) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer div:nth-child(1) span:nth-child(3) a {
+  border: 1.5px solid var(--natural-color);
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.footer div:nth-child(1) span:nth-child(3) a:hover {
+  background-color: var(--natural-color);
+  color: var(--primary-color);
+}
+
+.footer div:nth-child(2),
+.footer div:nth-child(3),
+.footer div:nth-child(4) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* flex: 1 1 140px; */
+}
+
+.footer a {
+  text-decoration: none;
+  color: var(--natural-color);
+  font-size: 12px;
+  transition:
+    color 0.25s ease,
+    padding-left 0.25s ease;
+}
+
+.footer a:hover {
+  color: black;
+  padding-left: 4px;
+}
+
+.footer div:nth-child(2) span:nth-child(1),
+.footer div:nth-child(3) span:nth-child(1),
+.footer div:nth-child(4) span:nth-child(1) {
+  color: white;
+}
+
+.copyright {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 7%;
+  background-color: var(--primary-color);
+  border-top: 1px solid var(--natural-color);
+  color: var(--natural-color);
+  font-size: 12px;
+}
+
+.copyright a {
+  text-decoration: none;
+  color: var(--natural-color);
+  transition: color 0.25s ease;
+}
+
+.copyright a:hover {
+  color: black;
+}
+
+.copyright div:nth-child(2) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .mobileMenu,
+  .menuOverlay {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    font-size: 32px;
+  }
+
+  .options3 {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .options3 > .planCard {
+    width: 260px;
+    aspect-ratio: unset;
+    height: auto;
+  }
+
+  .subscribe > div {
+    left: 15%;
+    width: 70%;
+  }
+
+  .privateCard {
+    width: 420px;
+  }
+
+  .options2[data-panel="courses"] .options3 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: none;
+  }
+
+  .options2[data-panel="courses"] .options3 .courseCard {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .courseCard > div:nth-child(1) {
+    height: 220px;
+  }
+
+  .footer {
+    padding-top: 70px;
+    gap: 30px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) {
+    margin-left: -25px; /* scaled down from -40px so the logo doesn't creep toward the edge as space tightens */
+  }
+}
+
+/* Tablets (max-width: 899px) */
+@media (max-width: 899px) {
+  .offer {
+    padding-top: 40px;
+  }
+
+  .options {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .options2 {
+    margin-top: 60px;
+  }
+
+  .options2 > span:nth-child(1) {
+    font-size: 26px;
+  }
+
+  .options3 {
+    margin-top: 40px;
+    gap: 24px;
+  }
+
+  .options3 > .planCard {
+    width: calc(50% - 12px);
+    min-width: 240px;
+  }
+
+  .subscribe > div {
+    left: 10%;
+    width: 80%;
+  }
+
+  .privateCard {
+    width: 90%;
+    max-width: 480px;
+  }
+
+  .options2[data-panel="courses"] .options3 {
+    gap: 24px;
+  }
+
+  .options2[data-panel="courses"] .options3 .courseCard {
+    max-width: 300px;
+  }
+
+  .footer div:nth-child(1) {
+    flex: 1 1 100%;
+  }
+
+  .footer div:nth-child(2),
+  .footer div:nth-child(3),
+  .footer div:nth-child(4) {
+    flex: 1 1 30%;
+  }
+}
+
+@media (max-width: 767px) {
+  .links {
+    display: none;
+  }
+
+  nav #contactUs {
+    display: none;
+  }
+
+  nav #menuToggle {
+    display: block;
+    color: white;
+    font-size: 200%;
+    cursor: pointer;
+  }
+
+  nav {
+    padding: 10px 5%;
+  }
+
+  .heronav {
+    height: 320px;
+  }
+
+  .hero {
+    font-size: 26px;
+  }
+
+  .offer {
+    padding-inline: 6%;
+  }
+
+  .options {
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .options2 {
+    margin-top: 50px;
+  }
+
+  .options2 > span:nth-child(1) {
+    font-size: 22px;
+  }
+
+  .options2 > span:nth-child(2) {
+    font-size: 14px;
+  }
+
+  .options3 {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 30px;
+    gap: 20px;
+  }
+
+  .options3 > .planCard {
+    width: 100%;
+    max-width: 340px;
+    place-self: center;
+  }
+
+  .copyright {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 6%;
+  }
+
+  .copyright div:nth-child(2) {
+    justify-content: center;
+  }
+
+  .subscribe {
+    height: 230px;
+  }
+
+  .subscribe > div {
+    height: auto;
+    top: 30px;
+    left: 5%;
+    width: 90%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 24px 20px;
+  }
+
+  .subscribe > div > input {
+    width: 100%;
+  }
+
+  .subscribe > div > button {
+    width: 100%;
+  }
+
+  .privateCard {
+    width: 100%;
+    max-width: 400px;
+    padding: 16px;
+  }
+
+  .privateEnquiry {
+    padding: 14px;
+    margin-top: 30px;
+  }
+
+  .options2[data-panel="courses"] .options3 {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .options2[data-panel="courses"] .options3 .courseCard {
+    max-width: 360px;
+    place-self: center;
+    width: 100%;
+  }
+
+  .courseCard > div:nth-child(1) {
+    height: 200px;
+  }
+
+  .courseCard > div:nth-child(6) span:last-child {
+    width: 140px;
+  }
+
+  .footer {
+    flex-direction: column;
+    padding-top: 50px;
+    row-gap: 30px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) {
+    margin-left: -15px;
+  }
+
+  .footer div:nth-child(2),
+  .footer div:nth-child(3),
+  .footer div:nth-child(4) {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .heronav {
+    height: 260px;
+  }
+
+  .hero {
+    font-size: 22px;
+    gap: 8px;
+  }
+
+  .hero span {
+    width: 60px;
+  }
+
+  .offer {
+    padding-top: 30px;
+    padding-inline: 5%;
+  }
+
+  .options {
+    gap: 10px;
+  }
+
+  .options span:first-child {
+    padding-inline: 8px;
+    font-size: 13px;
+  }
+
+  .options2 {
+    margin-top: 40px;
+  }
+
+  .options2 > span:nth-child(1) {
+    font-size: 20px;
+  }
+
+  .options3 > .planCard {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .options3 > div span:nth-child(4) p:first-child {
+    font-size: 16px;
+  }
+
+  .options3 > div span:nth-child(5) {
+    height: 36px;
+    margin-top: 20px;
+  }
+
+  .options3 > div span:nth-child(6),
+  .options3 > div span:nth-child(7),
+  .options3 > div span:nth-child(8) {
+    font-size: 11px;
+    margin-top: 20px;
+  }
+
+  .options3 > div span:nth-child(6) i,
+  .options3 > div span:nth-child(7) i,
+  .options3 > div span:nth-child(8) i {
+    width: 20px;
+  }
+
+  .subscribe {
+    height: 250px;
+  }
+
+  .subscribe > div {
+    left: 4%;
+    width: 92%;
+    padding: 20px 16px;
+  }
+
+  .bookingForm {
+    padding: 24px 20px;
+    margin-top: 40px;
+  }
+
+  .privateCard {
+    max-width: 100%;
+  }
+
+  .privateEnquiry {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .privateEnquiry-text {
+    align-items: flex-start;
+  }
+
+  .privateEnquiry-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .privateName {
+    font-size: 15px;
+  }
+
+  .privatePrice p:first-child {
+    font-size: 16px;
+  }
+
+  .courseCard > div:nth-child(1) {
+    height: 180px;
+  }
+
+  .courseCard > div:nth-child(2) {
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  .courseCard > div:nth-child(3) {
+    font-size: 11px;
+    margin-top: 14px;
+  }
+
+  .courseCard > div:nth-child(4) {
+    margin-top: 14px;
+  }
+
+  .courseCard > div:nth-child(6) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-block: 16px;
+  }
+
+  .courseCard > div:nth-child(6) span:last-child {
+    width: 100%;
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) {
+    margin-left: -20px;
+    gap: 12px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(2) {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 424px) {
+  nav img {
+    width: 28px;
+  }
+
+  nav #menuToggle {
+    font-size: 150%;
+  }
+
+  .heronav {
+    height: 220px;
+  }
+
+  .hero {
+    font-size: 18px;
+  }
+
+  .options {
+    gap: 8px;
+  }
+
+  .options span:first-child {
+    font-size: 12px;
+  }
+
+  .options2 > span:nth-child(1) {
+    font-size: 18px;
+  }
+
+  .options2 > span:nth-child(2) {
+    font-size: 13px;
+  }
+
+  .options3 > .planCard {
+    padding: 14px;
+  }
+
+  .options3 > div span:first-child .popular {
+    width: 50px;
+    height: 26px;
+    font-size: 11px;
+  }
+
+  .copyright div:nth-child(2) {
+    gap: 12px;
+    font-size: 11px;
+  }
+
+  .subscribe {
+    height: 270px;
+  }
+
+  .subscribe > div {
+    left: 3%;
+    width: 94%;
+  }
+
+  .subscribe > div > button {
+    height: 44px;
+  }
+
+  .privateCard {
+    padding: 14px;
+  }
+
+  .privateEnquiry-text p:first-child {
+    font-size: 12px;
+  }
+
+  .privateEnquiry-text p:last-child {
+    font-size: 11px;
+  }
+
+  .options2[data-panel="courses"] .options3 .courseCard {
+    max-width: 100%;
+  }
+
+  .courseCard > div:nth-child(1) {
+    height: 160px;
+  }
+
+  .footer {
+    padding-inline: 6%;
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 319px) {
+  .mobileMenu {
+    width: 100vw;
+  }
+
+  .hero {
+    font-size: 16px;
+  }
+
+  .options3 > div span:nth-child(4) p:first-child {
+    font-size: 15px;
+  }
+
+  .options3 > div span:nth-child(6),
+  .options3 > div span:nth-child(7),
+  .options3 > div span:nth-child(8) {
+    gap: 8px;
+  }
+}

@@ -1,0 +1,645 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: "poppins", sans-serif;
+  overflow-x: hidden; /* stray wide elements no longer create horizontal scroll */
+}
+
+:root {
+  --primary-color: #fa7001;
+  --natural-color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    rgb(17, 15, 14),
+    rgba(40, 38, 36, 0.6) 100%
+  );
+  padding: 10px 7%;
+  box-shadow: 0px 2px 4px rgba(8, 8, 8, 0.8);
+  position: fixed; /* was sticky */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  transition:
+    padding 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+nav div {
+  display: flex;
+  gap: clamp(16px, 3vw, 40px); /* was 25% – caused overlap on mid screens */
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+nav .links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+nav .links a:hover {
+  color: var(--primary-color);
+}
+
+nav .links a:hover::after {
+  width: 100%;
+}
+
+nav #contactUs {
+  background-color: #fa7001;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+nav #contactUs:hover {
+  background-color: #e26400;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 10px rgba(250, 112, 1, 0.4);
+}
+
+nav span {
+  width: fit-content;
+}
+
+nav img {
+  width: 35px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+nav a:first-child:hover img {
+  transform: scale(1.08);
+}
+
+nav #menuToggle,
+nav #menuToggle:focus-visible {
+  display: none;
+}
+
+nav #menuToggle {
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+nav #menuToggle:hover {
+  color: var(--primary-color);
+  transform: rotate(90deg);
+}
+
+/* MOBILE MENU (hidden by default, only used under 767px) */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(75vw, 300px);
+  background: rgb(17, 15, 14);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 80px 30px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 200;
+}
+
+.mobileMenu.open {
+  transform: translateX(0);
+}
+
+.mobileMenu a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.mobileMenu #mobileContactUs {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  padding: 12px 20px;
+  text-align: center;
+  width: fit-content;
+}
+
+#menuClose {
+  color: white;
+  font-size: 150%;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
+
+.menuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 150;
+}
+
+.menuOverlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================ */
+/* SCROLL REVEAL                                                */
+/* ============================================================ */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.scroll-reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================ */
+/* ARTICLE ENTRANCE (loads immediately, above the fold)         */
+/* ============================================================ */
+
+@keyframes articleFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.read {
+  display: flex;
+  flex-direction: column;
+  /* Increased from 40px to 100px to clear the fixed navbar + give breathing room */
+  padding-top: 150px;
+  padding-bottom: 100px;
+  padding-inline: 7%;
+  height: auto;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  place-self: center;
+  opacity: 0;
+  animation: articleFadeUp 0.6s ease forwards;
+}
+
+.topic {
+  font-size: 25px;
+  font-weight: 550;
+  display: flex;
+  place-self: center;
+  margin-top: 10px;
+  opacity: 0;
+  animation: articleFadeUp 0.6s ease forwards;
+  animation-delay: 0.15s;
+  transition: color 0.3s ease;
+}
+
+.topicImage {
+  width: 100%;
+  /* Removed the fixed 100px height */
+  margin-top: 20px;
+  border-radius: 12px; /* Optional: makes the image look polished */
+  overflow: hidden; /* Ensures the image stays neatly inside the rounded corners */
+  opacity: 0;
+  animation: articleFadeUp 0.6s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.topicImage img {
+  width: 100%;
+  height: auto; /* CRITICAL: Lets the image scale proportionally without overflowing */
+  display: block; /* Removes the tiny invisible gap that sometimes appears under images */
+  object-fit: cover;
+  max-height: 450px; /* Optional: prevents the image from being absurdly tall on large desktop screens */
+  transition: transform 0.5s ease;
+}
+
+.topicImage:hover img {
+  transform: scale(1.03);
+}
+
+/* ============================================================ */
+/* ARTICLE BODY — hover on links, staggered paragraph reveal    */
+/* ============================================================ */
+
+.article > div.scroll-reveal:nth-child(2) {
+  transition-delay: 0s;
+}
+.article > div.scroll-reveal:nth-child(3) {
+  transition-delay: 0.1s;
+}
+.article > div.scroll-reveal:nth-child(4) {
+  transition-delay: 0.2s;
+}
+.article > div.scroll-reveal:nth-child(5) {
+  transition-delay: 0.3s;
+}
+.article > div.scroll-reveal:nth-child(6) {
+  transition-delay: 0.4s;
+}
+
+.article {
+  padding-inline: 200px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  text-align: justify;
+}
+
+.alsoRead {
+  display: flex;
+  gap: 10px;
+}
+
+.alsoRead a {
+  text-decoration: none;
+  font-weight: bold;
+    color: var(--primary-color);
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.alsoRead a:hover {
+  color: #e26400;
+  padding-left: 4px;
+}
+
+.footer {
+  background-color: var(--primary-color);
+  padding-inline: 7%;
+  padding-top: 100px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap; /* was no-wrap by default, forced 4 columns at any width */
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 280px;
+}
+
+.footer div:nth-child(1) span:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 2.5vw, 20px);
+  color: var(--natural-color);
+  flex-wrap: wrap;
+  row-gap: 12px;
+  margin-left: -40px;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(1) {
+  background: url("../src/image/white p without background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: clamp(70px, 10vw, 150px);
+  flex-shrink: 0;
+  aspect-ratio: 1;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(2) {
+  width: 1px;
+  height: clamp(50px, 8vw, 100px);
+  border: 1.5px solid white;
+  flex-shrink: 0;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(1) {
+  font-size: clamp(28px, 6vw, 65px);
+  font-weight: bold;
+  display: block;
+  margin-left: 0px;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(2) {
+  font-size: clamp(13px, 2vw, 20px);
+}
+
+.footer div:nth-child(1) span:nth-child(2) {
+  width: 100%; /* was a fixed 400px */
+  max-width: 400px;
+  display: block;
+  color: var(--natural-color);
+  font-size: 14px;
+}
+
+.footer div:nth-child(1) span:nth-child(3) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer div:nth-child(1) span:nth-child(3) a {
+  border: 1.5px solid var(--natural-color);
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.footer div:nth-child(1) span:nth-child(3) a:hover {
+  background-color: var(--natural-color);
+  color: var(--primary-color);
+}
+
+.footer div:nth-child(2),
+.footer div:nth-child(3),
+.footer div:nth-child(4) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* flex: 1 1 140px; */
+}
+
+.footer a {
+  text-decoration: none;
+  color: var(--natural-color);
+  font-size: 12px;
+  transition:
+    color 0.25s ease,
+    padding-left 0.25s ease;
+}
+
+.footer a:hover {
+  color: black;
+  padding-left: 4px;
+}
+
+.footer div:nth-child(2) span:nth-child(1),
+.footer div:nth-child(3) span:nth-child(1),
+.footer div:nth-child(4) span:nth-child(1) {
+  color: white;
+}
+
+.copyright {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 7%;
+  background-color: var(--primary-color);
+  border-top: 1px solid var(--natural-color);
+  color: var(--natural-color);
+  font-size: 12px;
+}
+
+.copyright a {
+  text-decoration: none;
+  color: var(--natural-color);
+  transition: color 0.25s ease;
+}
+
+.copyright a:hover {
+  color: black;
+}
+
+.copyright div:nth-child(2) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .mobileMenu,
+  .menuOverlay {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer {
+    padding-top: 70px;
+    gap: 30px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) {
+    margin-left: -25px; /* scaled down from -40px so the logo doesn't creep toward the edge as space tightens */
+  }
+
+    .article {
+    padding-inline: 100px; /* was 200px */
+  }
+
+  .topic {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 899px) {
+  .footer div:nth-child(1) {
+    flex: 1 1 100%;
+  }
+
+  .footer div:nth-child(2),
+  .footer div:nth-child(3),
+  .footer div:nth-child(4) {
+    flex: 1 1 30%;
+  }
+
+   .article {
+    padding-inline: 60px;
+  }
+
+  .read {
+    padding-top: 130px;
+  }
+}
+
+@media (max-width: 767px) {
+  .links {
+    display: none;
+  }
+
+  nav #contactUs {
+    display: none;
+  }
+
+  nav #menuToggle {
+    display: block;
+    color: white;
+    font-size: 200%;
+    cursor: pointer;
+  }
+
+  nav {
+    padding: 10px 5%;
+  }
+
+  .footer {
+    flex-direction: column;
+    padding-top: 50px;
+    row-gap: 30px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) {
+    margin-left: -15px;
+  }
+
+  .footer div:nth-child(2),
+  .footer div:nth-child(3),
+  .footer div:nth-child(4) {
+    flex: 1 1 auto;
+  }
+
+    .read {
+    padding-inline: 6%;
+    padding-top: 110px;
+    padding-bottom: 70px;
+  }
+
+  .topic {
+    font-size: 20px;
+    text-align: center;
+    padding-inline: 4%;
+  }
+
+  .date {
+    font-size: 13px;
+  }
+
+  .article {
+    padding-inline: 0; /* .read's own 6% padding already applies here */
+    margin-top: 35px;
+    gap: 28px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .topicImage img {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 575px) {
+  .footer div:nth-child(1) span:nth-child(1) {
+    margin-left: -20px;
+    gap: 12px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(2) {
+    font-size: 13px;
+  }
+
+    .read {
+    padding-inline: 5%;
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+
+  .topic {
+    font-size: 18px;
+  }
+
+  .date {
+    font-size: 12px;
+  }
+
+  .article {
+    margin-top: 28px;
+    gap: 22px;
+    font-size: 13px;
+  }
+
+  .topicImage img {
+    max-height: 240px;
+  }
+
+  .alsoRead {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 424px) {
+  nav img {
+    width: 28px;
+  }
+
+  nav #menuToggle {
+    font-size: 150%;
+  }
+
+  .footer {
+    padding-inline: 6%;
+    padding-top: 40px;
+  }
+
+    .read {
+    padding-inline: 4%;
+  }
+
+  .topic {
+    font-size: 16px;
+  }
+
+  .topicImage img {
+    max-height: 200px;
+  }
+
+  .article {
+    font-size: 12.5px;
+  }
+}
+
+@media (max-width: 319px) {
+  .mobileMenu {
+    width: 100vw;
+  }
+}
