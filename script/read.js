@@ -1,4 +1,6 @@
-// mobilemenu
+// ============================================================
+// MOBILE MENU
+// ============================================================
 
 const menuToggle = document.getElementById("menuToggle");
 const menuClose = document.getElementById("menuClose");
@@ -21,12 +23,8 @@ menuToggle.addEventListener("click", openMenu);
 menuClose.addEventListener("click", closeMenu);
 menuOverlay.addEventListener("click", closeMenu);
 
-
-// Close the menu whenever a nav link inside it is tapped
 mobileMenu.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", (event) => {
-    // Placeholder links (empty href) shouldn't navigate/reload —
-    // that was cutting the close animation off mid-way
     if (!link.getAttribute("href")) {
       event.preventDefault();
     }
@@ -34,34 +32,28 @@ mobileMenu.querySelectorAll("a").forEach((link) => {
   });
 });
 
-
 // ============================================================
 // LOAD ARTICLE DATA FROM LOCALSTORAGE
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Get the saved data
   const savedData = localStorage.getItem("currentArticle");
 
   if (savedData) {
-    // 2. Parse it back into a JavaScript object
     const article = JSON.parse(savedData);
 
-    // 3. Target the elements by their new IDs
     const dateEl = document.getElementById("readDate");
     const topicEl = document.getElementById("readTopic");
     const imageEl = document.getElementById("readImage");
     const authorEl = document.getElementById("readAuthor");
     const descEl = document.getElementById("readDescription");
 
-    // 4. Update the HTML with the new data
     if (dateEl) dateEl.textContent = article.date;
     if (topicEl) topicEl.textContent = article.title;
     if (imageEl) imageEl.src = article.imgSrc;
     if (authorEl) authorEl.textContent = `By ${article.author}`;
     if (descEl) descEl.textContent = article.description;
 
-    // 5. Optional: Clear the data so it doesn't persist if they visit read.html directly later
     localStorage.removeItem("currentArticle");
   }
 });
@@ -85,3 +77,80 @@ const revealObserver = new IntersectionObserver(
 );
 
 scrollRevealElements.forEach((el) => revealObserver.observe(el));
+
+// ============================================================
+// AUTHOR INFO - Special observer for stagger
+// ============================================================
+
+const authorInfo = document.querySelector(".author-info");
+if (authorInfo) {
+  const authorObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          authorObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+  authorObserver.observe(authorInfo);
+}
+
+// ============================================================
+// FOOTER ANIMATIONS
+// ============================================================
+
+const footerObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('show');
+      }, index * 100);
+      footerObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+});
+
+document.querySelectorAll('.footer > div').forEach((el) => {
+  footerObserver.observe(el);
+});
+
+// ============================================================
+// COPYRIGHT ANIMATION
+// ============================================================
+
+const copyrightElement = document.querySelector('.copyright');
+
+if (copyrightElement) {
+  const copyrightObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        copyrightObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px 0px 0px'
+  });
+
+  copyrightObserver.observe(copyrightElement);
+
+  const forceCheck = () => {
+    const rect = copyrightElement.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      copyrightElement.classList.add('show');
+      copyrightObserver.unobserve(copyrightElement);
+    }
+  };
+  
+  forceCheck();
+  window.addEventListener('scroll', forceCheck, { passive: true });
+}
+
+console.log('Read page animations fully initialized!');

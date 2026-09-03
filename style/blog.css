@@ -4,6 +4,18 @@
   box-sizing: border-box;
 }
 
+/* Apply smooth scrolling to the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* For browsers that support scroll-behavior */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -13,6 +25,30 @@ body {
 :root {
   --primary-color: #fa7001;
   --natural-color: white;
+}
+
+section {
+  scroll-margin-top: 80px;
+}
+
+.heronav {
+  scroll-margin-top: 0;
+}
+
+.blog-post {
+  scroll-margin-top: 80px;
+}
+
+.subscribe {
+  scroll-margin-top: 80px;
+}
+
+.footer {
+  scroll-margin-top: 80px;
+}
+
+.copyright {
+  scroll-margin-top: 80px;
 }
 
 .page-link.active{
@@ -30,7 +66,7 @@ nav {
   );
   padding: 10px 7%;
   box-shadow: 0px 2px 4px rgba(8, 8, 8, 0.8);
-  position: fixed; /* was sticky */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -42,7 +78,7 @@ nav {
 
 nav div {
   display: flex;
-  gap: clamp(16px, 3vw, 40px); /* was 25% – caused overlap on mid screens */
+  gap: clamp(16px, 3vw, 40px);
 }
 
 nav a {
@@ -183,9 +219,11 @@ nav #menuToggle:hover {
 .heronav {
   background:
     linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
-    url("../src/image/profesional coders.jpg");
+    url("../src/image/Blog.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position:center;
+  background-attachment: fixed;
   height: 450px;
   width: 100%;
 }
@@ -240,14 +278,48 @@ nav #menuToggle:hover {
   align-items: center;
 }
 
+/* ============================================================ */
+/* OUR ARTICLES - Enhanced with animation                       */
+/* ============================================================ */
+
 .ourArticles {
-  align-self: flex-start;   /* was justify-self: flex-start */
+  align-self: flex-start;
   display: flex;
   font-size: 25px;
   font-weight: 550;
   border-bottom: 2px solid var(--primary-color);
-max-width: 1000px;
+  max-width: 1000px;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
+.ourArticles.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ourArticles::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 0;
+  background-color: #e26400;
+  animation: underlineGrow 0.8s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes underlineGrow {
+  to { width: 100%; }
+}
+
+/* ============================================================ */
+/* CATEGORY BUTTONS - Entrance animation                        */
+/* ============================================================ */
 
 .blogCategories {
   display: flex;
@@ -256,6 +328,49 @@ max-width: 1000px;
   justify-content: center;
   margin-top: 80px;
 }
+
+.category-btn {
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: categoryEntrance 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.category-btn:nth-child(1) { animation-delay: 0.1s; }
+.category-btn:nth-child(2) { animation-delay: 0.2s; }
+.category-btn:nth-child(3) { animation-delay: 0.3s; }
+.category-btn:nth-child(4) { animation-delay: 0.4s; }
+.category-btn:nth-child(5) { animation-delay: 0.5s; }
+.category-btn:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes categoryEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.category-btn:hover {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.category-btn.active {
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--primary-color);
+  font-weight: 600;
+}
+
+/* ============================================================ */
+/* BLOG ARTICLES GRID                                           */
+/* ============================================================ */
 
 .blogArticles {
   display: grid;
@@ -267,6 +382,33 @@ max-width: 1000px;
   gap: 40px;
 }
 
+/* ============================================================ */
+/* ARTICLE CARDS - Enhanced entrance with stagger               */
+/* ============================================================ */
+
+.blogArticles > div.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px) scale(0.9);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease,
+              transform 0.35s ease;
+}
+
+.blogArticles > div.scroll-reveal.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Stagger delays for cards */
+.blogArticles > div.scroll-reveal:nth-child(1) { transition-delay: 0.05s; }
+.blogArticles > div.scroll-reveal:nth-child(2) { transition-delay: 0.15s; }
+.blogArticles > div.scroll-reveal:nth-child(3) { transition-delay: 0.25s; }
+.blogArticles > div.scroll-reveal:nth-child(4) { transition-delay: 0.35s; }
+.blogArticles > div.scroll-reveal:nth-child(5) { transition-delay: 0.45s; }
+.blogArticles > div.scroll-reveal:nth-child(6) { transition-delay: 0.55s; }
+
 .blogArticles div {
   height: fit-content;
   padding: 20px;
@@ -274,8 +416,21 @@ max-width: 1000px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  width: 100%;        /* was 250px — let the grid column dictate width */
-  max-width: 300px;   /* keeps cards from getting comically wide on huge screens */
+  width: 100%;
+  max-width: 300px;
+  transition: transform 0.35s ease, 
+              box-shadow 0.35s ease, 
+              border-color 0.35s ease,
+              opacity 0.3s ease,
+              scale 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.blogArticles div:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
 }
 
 .blogArticles div span:first-child {
@@ -285,15 +440,60 @@ max-width: 1000px;
 
 .blogArticles div span:first-child img {
   width: 100%;
-  height: 100px;        /* was missing — now matches the span exactly */
-  object-fit: cover;    /* crops instead of distorting/overflowing */
+  height: 100px;
+  object-fit: cover;
   border-radius: 10px;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.blogArticles div:hover span:first-child img {
+  transform: scale(1.1);
+}
+
+/* ============================================================ */
+/* ARTICLE CARD ELEMENTS - Staggered entrance                   */
+/* ============================================================ */
+
+.blogArticles div.scroll-reveal span {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.blogArticles div.scroll-reveal.show span:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.blogArticles div.scroll-reveal.show span:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+
+.blogArticles div.scroll-reveal.show span:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.blogArticles div.scroll-reveal.show span:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.65s;
 }
 
 .blogArticles div span:nth-child(2) {
   font-size: 20px;
   font-weight: 500;
   margin-top: 30px;
+  transition: color 0.3s ease;
+}
+
+.blogArticles div:hover span:nth-child(2) {
+  color: var(--primary-color);
 }
 
 .blogArticles div span:nth-child(3) {
@@ -304,7 +504,7 @@ max-width: 1000px;
 
 .blogArticles div span:nth-child(4) {
   display: flex;
-  flex-wrap: wrap;       /* was missing — lets name/date wrap instead of squeezing */
+  flex-wrap: wrap;
   gap: 5px;
   justify-content: flex-start;
   align-items: center;
@@ -323,7 +523,7 @@ max-width: 1000px;
 }
 
 /* ============================================================ */
-/* SEE MORE — blog articles                                      */
+/* SEE MORE BUTTON - Entrance animation                         */
 /* ============================================================ */
 
 .blogArticles div.overLimit {
@@ -347,16 +547,26 @@ max-width: 1000px;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  transition: background-color 0.25s ease, 
+              color 0.25s ease, 
+              transform 0.2s ease,
+              opacity 0.5s ease;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .seeMoreBtn.visible {
   display: inline-flex;
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
 }
 
 .seeMoreBtn:hover {
   background-color: var(--primary-color);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(250, 112, 1, 0.3);
 }
 
 .seeMoreBtn:active {
@@ -364,117 +574,8 @@ max-width: 1000px;
 }
 
 /* ============================================================ */
-/* SCROLL REVEAL                                                */
+/* ARTICLE CARDS - animated filter transitions                  */
 /* ============================================================ */
-
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.scroll-reveal.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger the 6 article cards in rows of 3 */
-.blogArticles > div.scroll-reveal:nth-child(3n+1) { transition-delay: 0s; }
-.blogArticles > div.scroll-reveal:nth-child(3n+2) { transition-delay: 0.12s; }
-.blogArticles > div.scroll-reveal:nth-child(3n+3) { transition-delay: 0.24s; }
-
-/* ============================================================ */
-/* CATEGORY PILLS — clickable tabs                              */
-/* ============================================================ */
-
-.category-btn {
-  cursor: pointer;
-  padding-bottom: 4px;
-  border-bottom: 1px solid transparent;
-  transition: color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
-}
-
-.category-btn:hover {
-  color: var(--primary-color);
-  transform: translateY(-2px);
-}
-
-.category-btn.active {
-  color: var(--primary-color);
-  border-bottom: 1px solid var(--primary-color);
-  font-weight: 600;
-}
-
-/* ============================================================ */
-/* ARTICLE CARDS — lift + image zoom + title color shift        */
-/* ============================================================ */
-
-.blogArticles div {
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.blogArticles div:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
-  border-color: var(--primary-color);
-}
-
-.blogArticles div span:first-child img {
-  transition: transform 0.5s ease;
-}
-
-.blogArticles div:hover span:first-child img {
-  transform: scale(1.1);
-}
-
-.blogArticles div span:nth-child(2) {
-  transition: color 0.3s ease;
-}
-
-.blogArticles div:hover span:nth-child(2) {
-  color: var(--primary-color);
-}
-
-/* ============================================================ */
-/* HEADING UNDERLINE — subtle grow-in on load                   */
-/* ============================================================ */
-
-.ourArticles {
-  position: relative;
-}
-
-.ourArticles::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 2px;
-  width: 0;
-  background-color: #e26400;
-  animation: underlineGrow 0.8s ease forwards;
-  animation-delay: 0.5s;
-}
-
-@keyframes underlineGrow {
-  to { width: 100%; }
-}
-
-/* ============================================================ */
-/* ARTICLE CARDS — animated filter transitions                  */
-/* ============================================================ */
-
-.blogArticles div {
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease,
-    opacity 0.3s ease,
-    scale 0.3s ease;
-  overflow: hidden;
-  cursor: pointer;
-}
 
 .blogArticles div.hiding {
   opacity: 0;
@@ -496,10 +597,31 @@ max-width: 1000px;
   scale: 1;
 }
 
+/* ============================================================ */
+/* SCROLL REVEAL - Enhanced with better transitions             */
+/* ============================================================ */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================ */
+/* SUBSCRIBE SECTION - Enhanced animations                      */
+/* ============================================================ */
+
 .subscribe {
   position: relative;
   background-color: var(--natural-color);
   height: 120px;
+  overflow: visible;
 }
 
 .subscribe > div {
@@ -516,6 +638,31 @@ max-width: 1000px;
   top: 50px;
   left: 20%;
   width: 60%;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 10;
+}
+
+.subscribe > div.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.subscribe > div > p {
+  font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.subscribe > div.show > p {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.2s;
 }
 
 .subscribe > div > input {
@@ -523,11 +670,38 @@ max-width: 1000px;
   border-radius: 20px;
   padding: 10px 20px;
   width: 330px;
+  border: none;
+  color: white;
+  transition: box-shadow 0.25s ease, 
+              background-color 0.25s ease,
+              opacity 0.6s ease,
+              transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.subscribe > div.show > input {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
 }
 
 .subscribe > div > input::placeholder {
   color: #a7a3a3;
   font-weight: 550;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.subscribe > div.show > input::placeholder {
+  opacity: 1;
+  transition-delay: 0.6s;
+}
+
+.subscribe > div > input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+  background-color: #6b6b6b;
 }
 
 .subscribe > div > button {
@@ -540,26 +714,19 @@ max-width: 1000px;
   align-items: center;
   color: white;
   border: 2px solid transparent;
-}
-
-.subscribe > div > input {
-  transition:
-    box-shadow 0.25s ease,
-    background-color 0.25s ease;
-}
-
-.subscribe > div > input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--primary-color);
-  background-color: #6b6b6b;
-}
-
-.subscribe > div > button {
   cursor: pointer;
-  transition:
-    background-color 0.25s ease,
-    transform 0.2s ease,
-    box-shadow 0.25s ease;
+  transition: background-color 0.25s ease,
+              transform 0.25s ease,
+              box-shadow 0.25s ease,
+              opacity 0.6s ease;
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.subscribe > div.show > button {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.5s;
 }
 
 .subscribe > div > button:hover {
@@ -572,15 +739,20 @@ max-width: 1000px;
   transform: translateY(0);
 }
 
+/* ============================================================ */
+/* FOOTER - Enhanced animations                                 */
+/* ============================================================ */
+
 .footer {
   background-color: var(--primary-color);
   padding-inline: 7%;
   padding-top: 100px;
   padding-bottom: 20px;
   display: flex;
-  flex-wrap: wrap; /* was no-wrap by default, forced 4 columns at any width */
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 40px;
+  overflow: hidden;
 }
 
 .footer div:nth-child(1) {
@@ -588,6 +760,15 @@ max-width: 1000px;
   flex-direction: column;
   gap: 20px;
   min-width: 280px;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .footer div:nth-child(1) span:nth-child(1) {
@@ -599,6 +780,8 @@ max-width: 1000px;
   flex-wrap: wrap;
   row-gap: 12px;
   margin-left: -40px;
+  position: relative;
+  overflow: hidden;
 }
 
 .footer div:nth-child(1) span:nth-child(1) p:nth-child(1) {
@@ -615,6 +798,13 @@ max-width: 1000px;
   height: clamp(50px, 8vw, 100px);
   border: 1.5px solid white;
   flex-shrink: 0;
+  position: relative;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) {
+  overflow: hidden;
+  position: relative;
+  padding-left: 0;
 }
 
 .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(1) {
@@ -622,24 +812,65 @@ max-width: 1000px;
   font-weight: bold;
   display: block;
   margin-left: 0px;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(2) {
   font-size: clamp(13px, 2vw, 20px);
+  display: block;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(1) p:nth-child(3) span:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+
+.footer div:nth-child(1).show span:nth-child(1) p:nth-child(3) span:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.5s;
 }
 
 .footer div:nth-child(1) span:nth-child(2) {
-  width: 100%; /* was a fixed 400px */
+  width: 100%;
   max-width: 400px;
   display: block;
   color: var(--natural-color);
   font-size: 14px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
 }
 
 .footer div:nth-child(1) span:nth-child(3) {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
 }
 
 .footer div:nth-child(1) span:nth-child(3) a {
@@ -650,9 +881,8 @@ max-width: 1000px;
   display: flex;
   place-items: center;
   justify-content: center;
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
+  color: var(--natural-color);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .footer div:nth-child(1) span:nth-child(3) a:hover {
@@ -666,16 +896,104 @@ max-width: 1000px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* flex: 1 1 140px; */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(2).show {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+.footer div:nth-child(3).show {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.55s;
+}
+
+.footer div:nth-child(4).show {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.footer div:nth-child(2) span:nth-child(1),
+.footer div:nth-child(3) span:nth-child(1),
+.footer div:nth-child(4) span:nth-child(1) {
+  color: white;
+  font-size: clamp(0.9rem, 1.2vw, 1.125rem);
+  font-weight: 600;
+  opacity: 1;
+  transform: none;
 }
 
 .footer a {
   text-decoration: none;
   color: var(--natural-color);
   font-size: 12px;
-  transition:
-    color 0.25s ease,
-    padding-left 0.25s ease;
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 0.25s ease,
+              padding-left 0.25s ease;
+}
+
+.footer div:nth-child(2).show a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.footer div:nth-child(2).show a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+.footer div:nth-child(2).show a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+.footer div:nth-child(2).show a:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+.footer div:nth-child(3).show a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.footer div:nth-child(3).show a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+.footer div:nth-child(3).show a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+.footer div:nth-child(3).show a:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+.footer div:nth-child(4).show a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.footer div:nth-child(4).show a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
 }
 
 .footer a:hover {
@@ -683,11 +1001,39 @@ max-width: 1000px;
   padding-left: 4px;
 }
 
-.footer div:nth-child(2) span:nth-child(1),
-.footer div:nth-child(3) span:nth-child(1),
-.footer div:nth-child(4) span:nth-child(1) {
-  color: white;
+.footer div:nth-child(3).show a:nth-child(6) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1.0s;
 }
+
+/* Force social media links to always show */
+.footer div:nth-child(1) span:nth-child(3) {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.footer div:nth-child(1) span:nth-child(3) a {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  display: inline-flex !important;
+  visibility: visible !important;
+}
+
+/* Alternative - if the parent is hidden, force it */
+.footer div:nth-child(1) {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.footer div:nth-child(1).scroll-reveal {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+/* ============================================================ */
+/* COPYRIGHT - Enhanced animations                              */
+/* ============================================================ */
 
 .copyright {
   display: flex;
@@ -702,10 +1048,66 @@ max-width: 1000px;
   font-size: 12px;
 }
 
+.copyright div:nth-child(1) {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.copyright.show div:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+
+.copyright div:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.copyright.show div:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.5s;
+}
+
 .copyright a {
   text-decoration: none;
   color: var(--natural-color);
   transition: color 0.25s ease;
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 0.25s ease;
+}
+
+.copyright.show div:nth-child(2) a:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+
+.copyright.show div:nth-child(2) a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.copyright.show div:nth-child(2) a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+
+.copyright.show div:nth-child(2) a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
 }
 
 .copyright a:hover {
@@ -717,6 +1119,10 @@ max-width: 1000px;
   flex-wrap: wrap;
   gap: 20px;
 }
+
+/* ============================================================ */
+/* RESPONSIVE - Keep your existing media queries with additions */
+/* ============================================================ */
 
 @media (min-width: 768px) {
   .mobileMenu,
@@ -732,16 +1138,11 @@ max-width: 1000px;
 
   .footer {
     padding-top: 70px;
-    gap: 20px;
-  }
-
-  .footer {
-    padding-top: 70px;
     gap: 30px;
   }
 
   .footer div:nth-child(1) span:nth-child(1) {
-    margin-left: -25px; /* scaled down from -40px so the logo doesn't creep toward the edge as space tightens */
+    margin-left: -25px;
   }
 
   .subscribe > div {
@@ -749,7 +1150,7 @@ max-width: 1000px;
     width: 70%;
   }
 
-    .blog-post {
+  .blog-post {
     padding-bottom: 300px;
   }
 
@@ -779,7 +1180,7 @@ max-width: 1000px;
     grid-template-columns: repeat(2, 1fr);
   }
 
-    .footer div:nth-child(1) {
+  .footer div:nth-child(1) {
     flex: 1 1 100%;
   }
 
@@ -788,6 +1189,14 @@ max-width: 1000px;
   .footer div:nth-child(4) {
     flex: 1 1 30%;
   }
+
+  /* Faster stagger on tablet */
+  .blogArticles > div.scroll-reveal:nth-child(1) { transition-delay: 0.03s; }
+  .blogArticles > div.scroll-reveal:nth-child(2) { transition-delay: 0.08s; }
+  .blogArticles > div.scroll-reveal:nth-child(3) { transition-delay: 0.13s; }
+  .blogArticles > div.scroll-reveal:nth-child(4) { transition-delay: 0.18s; }
+  .blogArticles > div.scroll-reveal:nth-child(5) { transition-delay: 0.23s; }
+  .blogArticles > div.scroll-reveal:nth-child(6) { transition-delay: 0.28s; }
 }
 
 @media (max-width: 767px) {
@@ -861,6 +1270,11 @@ max-width: 1000px;
     align-items: stretch;
     gap: 12px;
     padding: 24px 20px;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  .subscribe > div.show {
+    transform: translateY(0) scale(1);
   }
 
   .subscribe > div > input {
@@ -871,7 +1285,7 @@ max-width: 1000px;
     width: 100%;
   }
 
-    .blog-post {
+  .blog-post {
     padding-inline: 6%;
     padding-top: 50px;
     padding-bottom: 120px;
@@ -897,7 +1311,7 @@ max-width: 1000px;
     width: 220px;
   }
 
-    .footer {
+  .footer {
     flex-direction: column;
     padding-top: 50px;
     row-gap: 30px;
@@ -911,6 +1325,18 @@ max-width: 1000px;
   .footer div:nth-child(3),
   .footer div:nth-child(4) {
     flex: 1 1 auto;
+  }
+
+  /* Faster stagger on mobile */
+  .blogArticles > div.scroll-reveal:nth-child(1) { transition-delay: 0.03s; }
+  .blogArticles > div.scroll-reveal:nth-child(2) { transition-delay: 0.08s; }
+  .blogArticles > div.scroll-reveal:nth-child(3) { transition-delay: 0.13s; }
+  .blogArticles > div.scroll-reveal:nth-child(4) { transition-delay: 0.18s; }
+  .blogArticles > div.scroll-reveal:nth-child(5) { transition-delay: 0.23s; }
+  .blogArticles > div.scroll-reveal:nth-child(6) { transition-delay: 0.28s; }
+
+        .footer div:nth-child(3).show a:nth-child(6) { 
+    transition-delay: 0.45s; 
   }
 }
 
@@ -933,8 +1359,6 @@ max-width: 1000px;
     gap: 12px;
   }
 
- 
-
   .footer div:nth-child(1) span:nth-child(2) {
     font-size: 13px;
   }
@@ -949,7 +1373,7 @@ max-width: 1000px;
     padding: 20px 16px;
   }
 
-    .blog-post {
+  .blog-post {
     padding-inline: 5%;
     padding-bottom: 80px;
   }
@@ -974,6 +1398,14 @@ max-width: 1000px;
     width: 100%;
     max-width: 320px;
   }
+
+  /* Even faster stagger on small mobile */
+  .blogArticles > div.scroll-reveal:nth-child(1) { transition-delay: 0.02s; }
+  .blogArticles > div.scroll-reveal:nth-child(2) { transition-delay: 0.06s; }
+  .blogArticles > div.scroll-reveal:nth-child(3) { transition-delay: 0.10s; }
+  .blogArticles > div.scroll-reveal:nth-child(4) { transition-delay: 0.14s; }
+  .blogArticles > div.scroll-reveal:nth-child(5) { transition-delay: 0.18s; }
+  .blogArticles > div.scroll-reveal:nth-child(6) { transition-delay: 0.22s; }
 }
 
 @media (max-width: 424px) {
@@ -993,7 +1425,7 @@ max-width: 1000px;
     font-size: 18px;
   }
 
- .footer {
+  .footer {
     padding-inline: 6%;
     padding-top: 40px;
   }
@@ -1016,7 +1448,7 @@ max-width: 1000px;
     height: 44px;
   }
 
-    .blogCategories {
+  .blogCategories {
     gap: 10px;
     justify-content: flex-start;
     width: 100%;
@@ -1035,6 +1467,14 @@ max-width: 1000px;
   .blogArticles div {
     padding: 14px;
   }
+
+  /* Fastest stagger on very small mobile */
+  .blogArticles > div.scroll-reveal:nth-child(1) { transition-delay: 0.01s; }
+  .blogArticles > div.scroll-reveal:nth-child(2) { transition-delay: 0.04s; }
+  .blogArticles > div.scroll-reveal:nth-child(3) { transition-delay: 0.07s; }
+  .blogArticles > div.scroll-reveal:nth-child(4) { transition-delay: 0.10s; }
+  .blogArticles > div.scroll-reveal:nth-child(5) { transition-delay: 0.13s; }
+  .blogArticles > div.scroll-reveal:nth-child(6) { transition-delay: 0.16s; }
 }
 
 @media (max-width: 319px) {

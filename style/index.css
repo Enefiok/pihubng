@@ -8,16 +8,22 @@ body {
   display: flex;
   flex-direction: column;
   font-family: "poppins", sans-serif;
-  overflow-x: hidden; /* stray wide elements no longer create horizontal scroll */
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 :root {
   --primary-color: #fa7001;
   --natural-color: white;
+  --text-dark: #1a1a1a;
+  --text-medium: #333333;
+  --text-light: #555555;
+  --text-muted: #777777;
 }
 
-.page-link.active{
-  color:var(--primary-color)
+.page-link.active {
+  color: var(--primary-color);
 }
 
 nav {
@@ -31,7 +37,7 @@ nav {
   );
   padding: 10px 7%;
   box-shadow: 0px 2px 4px rgba(8, 8, 8, 0.8);
-  position: fixed; /* was sticky */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -43,7 +49,7 @@ nav {
 
 nav div {
   display: flex;
-  gap: clamp(16px, 3vw, 40px); /* was 25% – caused overlap on mid screens */
+  gap: clamp(16px, 3vw, 40px);
 }
 
 nav a {
@@ -122,7 +128,7 @@ nav #menuToggle:hover {
   transform: rotate(90deg);
 }
 
-/* MOBILE MENU (hidden by default, only used under 767px) */
+/* MOBILE MENU */
 .mobileMenu {
   position: fixed;
   top: 0;
@@ -204,7 +210,7 @@ nav #menuToggle:hover {
   padding: 5% 7%;
   flex: 1;
   text-align: center;
- height: 100vh;
+  height: 100vh;
 }
 
 @keyframes fadeUp {
@@ -223,9 +229,9 @@ nav #menuToggle:hover {
   max-width: 250px;
   min-width: 90px;
   margin-bottom: 1%;
-  opacity: 0; /* starts hidden, animation brings it in */
+  opacity: 0;
   animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.2s; /* was previously set with no animation to use it */
+  animation-delay: 0.2s;
 }
 
 .hero-image-container #heroText {
@@ -244,20 +250,27 @@ nav #menuToggle:hover {
 
 #motto {
   font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--natural-color);
   margin-top: 2%;
   opacity: 0;
   animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.45s; /* staggered after the logo */
+  animation-delay: 0.45s;
 }
 
 #heroText {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.6;
   opacity: 0;
   animation: fadeUp 0.8s ease forwards;
   animation-delay: 0.7s;
 }
 
 .hero-image-container > span:not(#heroText) {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-weight: 300;
   opacity: 0;
   animation: fadeUp 0.8s ease forwards;
   animation-delay: 0.9s;
@@ -284,6 +297,8 @@ nav #menuToggle:hover {
   border-radius: 10px;
   color: var(--natural-color);
   min-width: 120px;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  font-weight: 500;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
@@ -340,14 +355,15 @@ nav #menuToggle:hover {
   background: transparent;
   border-radius: 50%;
   color: white;
-  font-size: 60%;
+  font-size: clamp(0.5rem, 0.8vw, 0.7rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3%;
   flex: 0 0 180px;
   box-shadow: 1px 1px 2px #706f6d;
-  /* transform: rotate(360deg); */
   transition:
     box-shadow 0.3s ease,
     transform 0.3s ease;
@@ -362,13 +378,6 @@ nav #menuToggle:hover {
   flex-direction: column;
   background-color: #fff8f3;
 }
-
-/* =========================
-   ABOUT SCROLL REVEAL
-========================= */
-/* ============================================================
-   SCROLL REVEAL
-   ============================================================ */
 
 .scroll-reveal {
   opacity: 0;
@@ -398,7 +407,6 @@ nav #menuToggle:hover {
   min-height: 200px;
 }
 
-
 .about-heading {
   grid-area: heading;
 }
@@ -427,6 +435,14 @@ nav #menuToggle:hover {
   overflow: hidden;
 }
 
+.aboutPic.scroll-reveal {
+  transform: translateX(60px);
+}
+
+.aboutPic.scroll-reveal.show {
+  transform: translateX(0);
+}
+
 .aboutPic span {
   background: url("../src/image/heroImage.jpg");
   background-repeat: no-repeat;
@@ -446,7 +462,7 @@ nav #menuToggle:hover {
   gap: 10px;
   place-self: center;
   font-weight: 700;
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
 }
 
 .about-heading span {
@@ -457,6 +473,7 @@ nav #menuToggle:hover {
   align-items: center;
   border-radius: 10px;
   width: 50px;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
 }
 
 .about-heading:hover span {
@@ -475,6 +492,9 @@ nav #menuToggle:hover {
   margin-top: 30px;
   font-weight: 500;
   font-style: italic;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--text-medium);
 }
 
 .about-desc {
@@ -483,6 +503,17 @@ nav #menuToggle:hover {
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.8;
+  color: var(--text-light);
+}
+
+.about-desc.scroll-reveal {
+  transform: translateX(-60px);
+}
+
+.about-desc.scroll-reveal.show {
+  transform: translateX(0);
 }
 
 .about-features {
@@ -513,13 +544,65 @@ nav #menuToggle:hover {
   flex-shrink: 0;
   color: white;
   font-weight: 800;
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
   transition:
     transform 0.3s ease,
     background-color 0.3s ease;
+  opacity: 0;
 }
 
 .about-features span:hover i {
   transform: scale(1.15) rotate(360deg);
+}
+
+.about-features span p {
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  line-height: 1.5;
+  color: var(--text-medium);
+  opacity: 0;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.about-features.show span:nth-child(1) i {
+  animation: riseIn 0.5s ease forwards 0s;
+}
+.about-features.show span:nth-child(1) p {
+  animation: slideInLeft 0.5s ease forwards 0.3s;
+}
+
+.about-features.show span:nth-child(2) i {
+  animation: riseIn 0.5s ease forwards 0.5s;
+}
+.about-features.show span:nth-child(2) p {
+  animation: slideInLeft 0.5s ease forwards 0.8s;
+}
+
+.about-features.show span:nth-child(3) i {
+  animation: riseIn 0.5s ease forwards 0.8s;
+}
+.about-features.show span:nth-child(3) p {
+  animation: slideInLeft 0.5s ease forwards 1s;
 }
 
 .about-btn {
@@ -535,10 +618,20 @@ nav #menuToggle:hover {
   margin-top: 30px;
   margin-bottom: 60px;
   cursor: pointer;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-weight: 500;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
     background-color 0.3s ease;
+}
+
+.about-btn.scroll-reveal {
+  transform: translateX(-60px);
+}
+
+.about-btn.scroll-reveal.show {
+  transform: translateX(0);
 }
 
 .about-btn:hover {
@@ -562,11 +655,12 @@ nav #menuToggle:hover {
 }
 
 .offer1 {
-  font-weight: 600;
-  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
   display: flex;
   gap: 7px;
   margin-bottom: 30px;
+  color: var(--text-dark);
 }
 
 .offer1 span {
@@ -582,28 +676,30 @@ nav #menuToggle:hover {
 .offer2 {
   font-weight: 500;
   max-width: 500px;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--text-medium);
 }
-/* Make the grid container align items to stretch (default, but good to be explicit) */
+
 .offer3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
   margin-top: 60px;
-  align-items: stretch; /* Ensures all cards in a row are the same height */
+  align-items: stretch;
 }
 
-/* Update the card itself to use Flexbox */
 .offer3 .offerCard {
   width: 100%;
   height: 100%;
-  min-height: 260px; /* Slightly reduced from 280px for a tighter look */
+  min-height: 260px;
   background-color: #f5f5f5;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Reduced from 12px */
-  padding: 20px; /* Reduced from 24px */
+  gap: 10px;
+  padding: 20px;
   cursor: pointer;
   text-align: left;
   transition:
@@ -613,13 +709,11 @@ nav #menuToggle:hover {
     box-shadow 0.25s ease;
 }
 
-/* Hover lift effect */
 .offer3 .offerCard:hover {
   transform: translateY(-6px);
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Icon styling */
 .offer3 .offerCard span:nth-child(1) {
   background-color: var(--primary-color);
   border-radius: 10px;
@@ -628,51 +722,43 @@ nav #menuToggle:hover {
   width: 40px;
   aspect-ratio: 1;
   color: var(--natural-color);
-  font-size: 20px;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
   transition: transform 0.3s ease;
-  flex-shrink: 0; /* Prevents icon from squishing */
+  flex-shrink: 0;
 }
 
 .offerCard:hover span:nth-child(1) {
   transform: rotate(-8deg) scale(1.1);
 }
 
-/* Title and Learn More text */
-.offer3 .offerCard span:nth-child(2),
-.offer3 .offerCard span:nth-child(4) {
-  font-weight: 550;
-  font-size: 15px;
-}
-
-/* Description text */
-
 .offer3 .offerCard span:nth-child(2) {
+  font-weight: 600;
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  color: var(--text-dark);
   margin-top: auto;
 }
 
 .offer3 .offerCard span:nth-child(3) {
-  font-size: 13px; /* Reduced from 14px for a more compact, modern look */
-  line-height: 1.4; /* Tighter line spacing (was 1.5) */
-  color: #555;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  line-height: 1.5;
+  color: var(--text-light);
   display: -webkit-box;
-  /* -webkit-line-clamp: 3;  */
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-top: auto;
 }
 
-/* THE MAGIC TRICK: Push the "Learn More" to the bottom of the card */
 .offer3 .offerCard span:nth-child(4) {
-  margin-top: auto; /* Still pushes to the bottom so all cards align perfectly */
-  padding-top: 5px; /* Adds just a tiny, intentional breath of space above it */
+  margin-top: auto;
+  padding-top: 5px;
   display: flex;
   align-items: center;
   gap: 6px;
-  font-weight: 600; /* Make it slightly bolder so it stands out */
-  font-size: 14px;
+  font-weight: 600;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  color: var(--text-medium);
 }
 
-/* Arrow animation */
 .offerCard span:nth-child(4) i {
   display: inline-block;
   opacity: 0;
@@ -682,22 +768,21 @@ nav #menuToggle:hover {
     transform 0.25s ease;
 }
 
-.offerCard.hovered span:nth-child(4) i {
+.offer3 .offerCard:hover span:nth-child(4) i {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Hover state colors */
-.offerCard.hovered {
+.offer3 .offerCard:hover {
   background-color: var(--primary-color);
   color: var(--natural-color);
 }
 
-.offerCard.hovered span:nth-child(3) {
+.offer3 .offerCard:hover span:nth-child(3) {
   color: var(--natural-color);
 }
 
-.offerCard.hovered span:nth-child(1) i {
+.offer3 .offerCard:hover span:nth-child(1) i {
   background-color: var(--natural-color);
   color: var(--primary-color);
   width: 100%;
@@ -707,38 +792,6 @@ nav #menuToggle:hover {
   border-radius: 10px;
 }
 
-/* --- See more / See less button --- */
-.seeMoreBtn {
-  display: none;
-  margin-top: 30px;
-  padding: 12px 10px;
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
-  background-color: transparent;
-  color: var(--primary-color);
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease-in-out,
-    color 0.2s ease-in-out,
-    transform 0.2s ease; /* NEW: pairs with hover/active below */
-  gap: 20px;
-  justify-content: center;
-}
-
-/* NEW — fill on hover (you had the color swap ready in the transition,
-   this is the state that actually triggers it) */
-.seeMoreBtn:hover {
-  background-color: var(--primary-color);
-  color: var(--natural-color);
-}
-
-/* NEW — quick press-down feedback on click/tap */
-.seeMoreBtn:active {
-  transform: scale(0.96);
-}
 .gallery {
   display: grid;
   place-items: center;
@@ -749,15 +802,18 @@ nav #menuToggle:hover {
 }
 
 .gallery div:nth-child(1) {
-  font-weight: 600;
-  font-size: clamp(20px, 4vw, 25px);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  color: var(--text-dark);
 }
 
 .gallery div:nth-child(2) {
-  font-size: 14px;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   font-weight: 500;
   margin-top: 20px;
   max-width: 500px;
+  line-height: 1.6;
+  color: var(--text-medium);
 }
 
 .gallery > div:nth-child(3) {
@@ -767,11 +823,9 @@ nav #menuToggle:hover {
   margin-top: 50px;
   padding-block: 10px;
   overflow: hidden;
-  width: 100%; /* was a fixed 85%, now fills its parent at any size */
+  width: 100%;
 }
 
-/* Each row is now a scrolling track. width: max-content lets it grow
-   past the visible container instead of being squashed to 1500px */
 .gallery > div:nth-child(3) > div {
   display: flex;
   flex-direction: row;
@@ -780,36 +834,35 @@ nav #menuToggle:hover {
   will-change: transform;
 }
 
-/* Top row -> moves right */
 .gallery > div:nth-child(3) > div[data-direction="right"] {
   animation: galleryScrollRight 25s linear infinite;
 }
 
-/* Bottom row -> moves left */
 .gallery > div:nth-child(3) > div[data-direction="left"] {
   animation: galleryScrollLeft 30s linear infinite;
 }
-/* Optional: pause both rows on hover so people can look at a frame.
-   Remove this rule if you don't want that. */
+
 .gallery > div:nth-child(3):hover > div {
   animation-play-state: paused;
 }
 
 .gallery > div:nth-child(3) div span {
-  overflow: hidden; /* clips the image to the box */
+  overflow: hidden;
   position: relative;
-  background-color: #e0e0e0; /* placeholder color while an image loads */
+  background-color: #e0e0e0;
 }
 
 .gallery > div:nth-child(3) div span img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fills the box without distorting */
-  display: block; /* removes the inline baseline gap */
-  pointer-events: none; /* stops drag-to-select breaking the animation */
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
   -webkit-user-drag: none;
   user-select: none;
 }
+
+
 
 .subscribe {
   position: relative;
@@ -833,16 +886,31 @@ nav #menuToggle:hover {
   width: 60%;
 }
 
+.subscribe > div > p {
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .subscribe > div > input {
   background-color: #5f5f5f;
   border-radius: 20px;
   padding: 10px 20px;
   width: 330px;
+  border: none;
+  color: white;
+  font-size: clamp(0.8rem, 0.9vw, 0.9rem);
 }
 
 .subscribe > div > input::placeholder {
   color: #a7a3a3;
-  font-weight: 550;
+  font-weight: 400;
+  font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+}
+
+.subscribe > div > input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .subscribe > div > button {
@@ -855,7 +923,22 @@ nav #menuToggle:hover {
   align-items: center;
   color: white;
   border: 2px solid transparent;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    transform 0.2s ease;
 }
+
+.subscribe > div > button:hover {
+  background-color: #e26400;
+  transform: translateY(-2px);
+}
+
+/* ============================================================ */
+/* FOOTER ANIMATIONS                                            */
+/* ============================================================ */
 
 .footer {
   background-color: var(--primary-color);
@@ -863,16 +946,28 @@ nav #menuToggle:hover {
   padding-top: 100px;
   padding-bottom: 20px;
   display: flex;
-  flex-wrap: wrap; /* was no-wrap by default, forced 4 columns at any width */
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 40px;
+  overflow: hidden;
 }
 
+/* Footer Logo Section - Slide from left */
 .footer div:nth-child(1) {
   display: flex;
   flex-direction: column;
   gap: 20px;
   min-width: 280px;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: 
+    opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .footer div:nth-child(1) span:nth-child(1) {
@@ -893,6 +988,17 @@ nav #menuToggle:hover {
   width: clamp(70px, 10vw, 150px);
   flex-shrink: 0;
   aspect-ratio: 1;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: 
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(1) p:nth-child(1) {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.2s;
 }
 
 .footer div:nth-child(1) span:nth-child(1) p:nth-child(2) {
@@ -900,31 +1006,91 @@ nav #menuToggle:hover {
   height: clamp(50px, 8vw, 100px);
   border: 1.5px solid white;
   flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.footer div:nth-child(1).show span:nth-child(1) p:nth-child(2) {
+  opacity: 1;
+  transition-delay: 0.4s;
+}
+
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) {
+  overflow: hidden;
+  position: relative;
+  padding-left: 0;
 }
 
 .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(1) {
-  font-size: clamp(28px, 6vw, 65px);
-  font-weight: bold;
+  font-size: clamp(1.8rem, 6vw, 4rem);
+  font-weight: 700;
   display: block;
   margin-left: 0px;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: 
+    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(1) p:nth-child(3) span:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.6s;
 }
 
 .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(2) {
-  font-size: clamp(13px, 2vw, 20px);
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  font-weight: 400;
+  display: block;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: 
+    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(1) p:nth-child(3) span:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.8s;
 }
 
 .footer div:nth-child(1) span:nth-child(2) {
-  width: 100%; /* was a fixed 400px */
+  width: 100%;
   max-width: 400px;
   display: block;
   color: var(--natural-color);
-  font-size: 14px;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1.0s;
 }
 
 .footer div:nth-child(1) span:nth-child(3) {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: 
+    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer div:nth-child(1).show span:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1.2s;
 }
 
 .footer div:nth-child(1) span:nth-child(3) a {
@@ -935,15 +1101,48 @@ nav #menuToggle:hover {
   display: flex;
   place-items: center;
   justify-content: center;
+  color: var(--natural-color);
+  font-size: clamp(0.8rem, 0.9vw, 0.9rem);
   transition:
     background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.3s ease;
+  opacity: 0;
+  transform: scale(0);
+  transition: 
+    opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background-color 0.25s ease,
     color 0.25s ease;
+}
+
+.footer div:nth-child(1).show span:nth-child(3) a {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.footer div:nth-child(1).show span:nth-child(3) a:nth-child(1) {
+  transition-delay: 1.3s;
+}
+.footer div:nth-child(1).show span:nth-child(3) a:nth-child(2) {
+  transition-delay: 1.4s;
+}
+.footer div:nth-child(1).show span:nth-child(3) a:nth-child(3) {
+  transition-delay: 1.5s;
+}
+.footer div:nth-child(1).show span:nth-child(3) a:nth-child(4) {
+  transition-delay: 1.6s;
 }
 
 .footer div:nth-child(1) span:nth-child(3) a:hover {
   background-color: var(--natural-color);
   color: var(--primary-color);
+  transform: scale(1.15) rotate(-5deg);
 }
+
+/* ============================================================ */
+/* FOOTER LINKS - Slide from bottom with stagger                */
+/* ============================================================ */
 
 .footer div:nth-child(2),
 .footer div:nth-child(3),
@@ -951,28 +1150,127 @@ nav #menuToggle:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* flex: 1 1 140px; */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.footer a {
-  text-decoration: none;
-  color: var(--natural-color);
-  font-size: 12px;
-  transition:
-    color 0.25s ease,
-    padding-left 0.25s ease;
+.footer div:nth-child(2).show {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
 }
 
-.footer a:hover {
-  color: black;
-  padding-left: 4px;
+.footer div:nth-child(3).show {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.footer div:nth-child(4).show {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
 }
 
 .footer div:nth-child(2) span:nth-child(1),
 .footer div:nth-child(3) span:nth-child(1),
 .footer div:nth-child(4) span:nth-child(1) {
   color: white;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  font-weight: 600;
+  opacity: 1;
 }
+
+.footer div:nth-child(2) a,
+.footer div:nth-child(3) a,
+.footer div:nth-child(4) a {
+  text-decoration: none;
+  color: var(--natural-color);
+  font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+  transition:
+    color 0.25s ease,
+    padding-left 0.25s ease,
+    transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: 
+    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.25s ease,
+    padding-left 0.25s ease;
+}
+
+.footer div:nth-child(2).show a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+.footer div:nth-child(2).show a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+.footer div:nth-child(2).show a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.footer div:nth-child(2).show a:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.footer div:nth-child(3).show a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.footer div:nth-child(3).show a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+.footer div:nth-child(3).show a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+.footer div:nth-child(3).show a:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+.footer div:nth-child(4).show a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+.footer div:nth-child(4).show a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+.footer a:hover {
+  color: black;
+  padding-left: 4px;
+  transform: translateX(3px);
+}
+
+.footer div:nth-child(3).show a:nth-child(6) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1.0s;
+}
+
+/* ============================================================ */
+/* COPYRIGHT SECTION ANIMATIONS                                 */
+/* ============================================================ */
 
 .copyright {
   display: flex;
@@ -984,23 +1282,77 @@ nav #menuToggle:hover {
   background-color: var(--primary-color);
   border-top: 1px solid var(--natural-color);
   color: var(--natural-color);
-  font-size: 12px;
 }
 
-.copyright a {
-  text-decoration: none;
-  color: var(--natural-color);
-  transition: color 0.25s ease;
+.copyright div:nth-child(1) {
+  font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: 
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.copyright a:hover {
-  color: black;
+.copyright.show div:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.2s;
 }
 
 .copyright div:nth-child(2) {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: 
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.copyright.show div:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.4s;
+}
+
+.copyright div:nth-child(2) a {
+  text-decoration: none;
+  color: var(--natural-color);
+  font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+  transition: color 0.25s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 
+    opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.25s ease;
+}
+
+.copyright.show div:nth-child(2) a:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+.copyright.show div:nth-child(2) a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.copyright.show div:nth-child(2) a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+.copyright.show div:nth-child(2) a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+
+.copyright a:hover {
+  color: black;
+  transform: translateY(-2px);
 }
 
 @keyframes galleryScrollRight {
@@ -1024,14 +1376,37 @@ nav #menuToggle:hover {
 .gallery > div:nth-child(3) div span {
   width: 150px;
   aspect-ratio: 1;
-  flex: 0 0 150px; /* was implied by the fixed 1500px track; now explicit so flex can't squish it */
+  flex: 0 0 150px;
 }
 
-/* ======================== */
-/* RESPONSIVE BREAKPOINTS  */
-/* ======================== */
+/* Force social media links to always show */
+.footer div:nth-child(1) span:nth-child(3) {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
 
-/* Small laptops / large tablets (900px - 1024px): give About section room to breathe before it stacks */
+.footer div:nth-child(1) span:nth-child(3) a {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  display: inline-flex !important;
+  visibility: visible !important;
+}
+
+/* Alternative - if the parent is hidden, force it */
+.footer div:nth-child(1) {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.footer div:nth-child(1).scroll-reveal {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+/* ============================================================ */
+/* RESPONSIVE - Footer & Copyright Mobile                       */
+/* ============================================================ */
+
 @media (max-width: 1024px) {
   .logo {
     width: 30%;
@@ -1079,11 +1454,10 @@ nav #menuToggle:hover {
   }
 
   .footer div:nth-child(1) span:nth-child(1) {
-    margin-left: -25px; /* scaled down from -40px so the logo doesn't creep toward the edge as space tightens */
+    margin-left: -25px;
   }
 }
 
-/* Tablets (768px - 899px): About copy gets cramped in 2 columns, stack it */
 @media (max-width: 899px) {
   .aboutInfo {
     grid-template-columns: 1fr;
@@ -1095,10 +1469,29 @@ nav #menuToggle:hover {
       "features"
       "btn";
     min-height: unset;
+    gap: 20px;
+    padding-top: 60px;
   }
 
   .aboutPic {
-    margin-top: 30px;
+    margin-top: 20px;
+  }
+
+  .about-intro {
+    margin-top: 10px;
+  }
+
+  .about-desc {
+    margin-top: 10px;
+  }
+
+  .about-features {
+    margin-top: 10px;
+  }
+
+  .about-btn {
+    margin-top: 20px;
+    margin-bottom: 40px;
   }
 
   .subscribe > div {
@@ -1117,8 +1510,11 @@ nav #menuToggle:hover {
   }
 }
 
-/* Mobile Landscape & Small Tablets (576px - 767px) */
 @media (max-width: 767px) {
+  html {
+    overflow-x: clip;
+  }
+
   .links {
     display: none;
   }
@@ -1148,23 +1544,28 @@ nav #menuToggle:hover {
   }
 
   #motto {
-    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    font-size: clamp(1rem, 4vw, 1.6rem);
+    margin-top: 3%;
   }
 
-  .hero-image-container #heroText {
-    margin-top: 5%;
-    font-size: 0.9rem;
+  #heroText {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    margin-top: 3%;
+  }
+
+  .hero-image-container > span:not(#heroText) {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
   }
 
   .buttons {
-    margin-top: 8%;
-    gap: 3%;
+    margin-top: 6%;
+    gap: 12px;
   }
 
   .buttons a {
-    padding: 10px 16px;
-    min-width: 90px;
-    font-size: 0.9rem;
+    padding: 12px 20px;
+    min-width: 100px;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
   }
 
   .carousel {
@@ -1180,50 +1581,160 @@ nav #menuToggle:hover {
     width: 140px;
     height: 45px;
     flex: 0 0 140px;
-    font-size: 55%;
+    font-size: clamp(0.45rem, 1.2vw, 0.55rem);
+  }
+
+  .aboutInfo {
+    padding-inline: 5%;
+    padding-top: 50px;
+    gap: 16px;
+  }
+
+  .about-heading {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+  }
+
+  .about-heading span {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    width: 40px;
+  }
+
+  .about-intro {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    margin-top: 5px;
+  }
+
+  .about-desc {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    margin-top: 5px;
+    line-height: 1.7;
+  }
+
+  .about-features span p {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+  }
+
+  .about-features span i {
+    width: 26px;
+    height: 26px;
+    font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+  }
+
+  .about-btn {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    padding: 8px 24px;
+    height: 36px;
+    margin-top: 10px;
+    margin-bottom: 30px;
   }
 
   .aboutPic span {
-    width: 75%;
+    width: 100%;
   }
 
   .offer {
     padding-block: 50px;
+    padding-inline: 5%;
+  }
+
+  .offer1 {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    margin-bottom: 20px;
+  }
+
+  .offer2 {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   }
 
   .offer3 {
     grid-template-columns: 1fr;
-
     margin-top: 40px;
-
     gap: 16px;
   }
 
-  .offer3 div {
+  .offer3 .offerCard {
     min-height: unset;
+    padding: 18px;
   }
 
-  /* Only the first 3 cards show until "See more" is clicked */
-
-  .offer3 .offerCard:nth-child(n + 4) {
-    display: none;
+  .offer3 .offerCard span:nth-child(2) {
+    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
   }
 
-  .offer3.expanded .offerCard:nth-child(n + 4) {
-    display: grid;
+  .offer3 .offerCard span:nth-child(3) {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
   }
 
-  .seeMoreBtn {
-    display: inline-flex;
-    place-self: center;
-    justify-content: center;
-    font-size: 10px;
-    height: 40px;
-    width: 90px;
+  .offer3 .offerCard span:nth-child(4) {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+  }
+
+  .offer3 .offerCard span:nth-child(1) {
+    width: 36px;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+  }
+
+  .offer3 {
+    display: block;
+    position: relative;
+  }
+
+  .offer3 .offerCard {
+    position: sticky;
+    margin-bottom: 16px;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .offer3 .offerCard:nth-child(1) {
+    top: 90px;
+    z-index: 1;
+  }
+  .offer3 .offerCard:nth-child(2) {
+    top: 110px;
+    z-index: 2;
+  }
+  .offer3 .offerCard:nth-child(3) {
+    top: 130px;
+    z-index: 3;
+  }
+  .offer3 .offerCard:nth-child(4) {
+    top: 150px;
+    z-index: 4;
+  }
+  .offer3 .offerCard:nth-child(5) {
+    top: 170px;
+    z-index: 5;
+  }
+
+  .offer3 .offerCard:nth-child(2).stacked {
+    background-color: #ffe3c2;
+  }
+  .offer3 .offerCard:nth-child(3).stacked {
+    background-color: #ffd39e;
+  }
+  .offer3 .offerCard:nth-child(4).stacked {
+    background-color: #ffc179;
+  }
+  .offer3 .offerCard:nth-child(5).stacked {
+    background-color: #ffab4d;
   }
 
   .gallery {
     padding-block: 50px;
+    padding-inline: 5%;
+  }
+
+  .gallery div:nth-child(1) {
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+  }
+
+  .gallery div:nth-child(2) {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    margin-top: 12px;
   }
 
   .gallery > div:nth-child(3) {
@@ -1248,45 +1759,143 @@ nav #menuToggle:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
-    padding: 24px 20px;
+    padding: 20px 16px;
+  }
+
+  .subscribe > div > p {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    white-space: normal;
+    text-align: center;
   }
 
   .subscribe > div > input {
     width: 100%;
+    font-size: clamp(0.8rem, 2vw, 0.85rem);
+    padding: 10px 16px;
   }
 
   .subscribe > div > button {
     width: 100%;
-  }
-
-  .copyright {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px 6%;
-  }
-
-  .copyright div:nth-child(2) {
-    justify-content: center;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    height: 44px;
   }
 
   .footer {
     flex-direction: column;
     padding-top: 50px;
+    padding-inline: 5%;
     row-gap: 30px;
+    gap: 30px;
+  }
+
+  .footer div:nth-child(1) {
+    min-width: unset;
+    gap: 16px;
+    transform: translateX(-20px);
+  }
+
+  .footer div:nth-child(1).show {
+    transform: translateX(0);
   }
 
   .footer div:nth-child(1) span:nth-child(1) {
     margin-left: -15px;
+    gap: 12px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(1) {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(2) {
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+  }
+
+  .footer div:nth-child(1) span:nth-child(2) {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
   }
 
   .footer div:nth-child(2),
   .footer div:nth-child(3),
   .footer div:nth-child(4) {
     flex: 1 1 auto;
+    gap: 8px;
+    transform: translateY(20px);
+  }
+
+  .footer div:nth-child(2).show {
+    transition-delay: 0.1s;
+  }
+  .footer div:nth-child(3).show {
+    transition-delay: 0.2s;
+  }
+  .footer div:nth-child(4).show {
+    transition-delay: 0.3s;
+  }
+
+  .footer div:nth-child(2) span:nth-child(1),
+  .footer div:nth-child(3) span:nth-child(1),
+  .footer div:nth-child(4) span:nth-child(1) {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+
+  .footer a {
+    font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+  }
+
+  .footer div:nth-child(2).show a:nth-child(2) { transition-delay: 0.15s; }
+  .footer div:nth-child(2).show a:nth-child(3) { transition-delay: 0.2s; }
+  .footer div:nth-child(2).show a:nth-child(4) { transition-delay: 0.25s; }
+  .footer div:nth-child(2).show a:nth-child(5) { transition-delay: 0.3s; }
+
+  .footer div:nth-child(3).show a:nth-child(2) { transition-delay: 0.25s; }
+  .footer div:nth-child(3).show a:nth-child(3) { transition-delay: 0.3s; }
+  .footer div:nth-child(3).show a:nth-child(4) { transition-delay: 0.35s; }
+  .footer div:nth-child(3).show a:nth-child(5) { transition-delay: 0.4s; }
+
+  .footer div:nth-child(4).show a:nth-child(2) { transition-delay: 0.35s; }
+  .footer div:nth-child(4).show a:nth-child(3) { transition-delay: 0.4s; }
+
+  .copyright {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px 5%;
+    gap: 8px;
+  }
+
+  .copyright div:nth-child(1) {
+    font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+    transform: translateY(-10px);
+  }
+
+  .copyright.show div:nth-child(1) {
+    transform: translateY(0);
+  }
+
+  .copyright div:nth-child(2) {
+    justify-content: center;
+    gap: 14px;
+    transform: translateY(10px);
+  }
+
+  .copyright.show div:nth-child(2) {
+    transform: translateY(0);
+  }
+
+  .copyright div:nth-child(2) a {
+    font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+  }
+
+  .copyright.show div:nth-child(2) a:nth-child(1) { transition-delay: 0.3s; }
+  .copyright.show div:nth-child(2) a:nth-child(2) { transition-delay: 0.35s; }
+  .copyright.show div:nth-child(2) a:nth-child(3) { transition-delay: 0.4s; }
+  .copyright.show div:nth-child(2) a:nth-child(4) { transition-delay: 0.45s; }
+
+    .footer div:nth-child(3).show a:nth-child(6) { 
+    transition-delay: 0.45s; 
   }
 }
 
-/* Mobile Portrai t (425px - 575px) */
 @media (max-width: 575px) {
   .hero-image-container {
     padding: 10% 4%;
@@ -1298,19 +1907,20 @@ nav #menuToggle:hover {
   }
 
   #motto {
-    font-size: clamp(1rem, 4vw, 1.4rem);
-  }
-
-  .hero-image-container > span {
-    font-size: 0.85rem;
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
   }
 
   .hero-image-container #heroText {
-    margin-top: 8%;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    margin-top: 5%;
+  }
+
+  .hero-image-container > span:not(#heroText) {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
   }
 
   .buttons {
-    margin-top: 10%;
+    margin-top: 8%;
     gap: 10px;
     flex-direction: column;
     width: 80%;
@@ -1319,7 +1929,7 @@ nav #menuToggle:hover {
   .buttons a {
     padding: 12px 20px;
     min-width: 100%;
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   }
 
   .carousel {
@@ -1335,49 +1945,91 @@ nav #menuToggle:hover {
     width: 120px;
     height: 40px;
     flex: 0 0 120px;
-    font-size: 50%;
+    font-size: clamp(0.4rem, 1.2vw, 0.5rem);
   }
 
   .aboutInfo {
-    padding-inline: 6%;
+    padding-inline: 4%;
+    padding-top: 40px;
+    gap: 12px;
+  }
+
+  .about-heading {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+  }
+
+  .about-heading span {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    width: 36px;
+  }
+
+  .about-intro {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  }
+
+  .about-desc {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    line-height: 1.6;
+  }
+
+  .about-features span p {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
   }
 
   .about-features span i {
-    height: 30px;
+    width: 24px;
+    height: 24px;
+    font-size: clamp(0.5rem, 1.5vw, 0.6rem);
   }
 
-  .aboutPic span {
-    width: 100%;
-  }
-
-  .aboutPic {
-    margin-top: 20px;
-  }
-
-  .about > div:nth-child(2) {
-    margin-left: 6%;
-    width: calc(100% - 12%);
-    justify-content: center;
+  .about-btn {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    padding: 8px 20px;
+    height: 34px;
   }
 
   .offer {
-    padding-inline: 6%;
+    padding-block: 40px;
+    padding-inline: 4%;
+  }
+
+  .offer1 {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+    gap: 5px;
+    margin-bottom: 16px;
   }
 
   .offer2 {
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   }
 
-  .offer3 div {
+  .offer3 .offerCard {
     padding: 16px;
   }
 
+  .offer3 .offerCard span:nth-child(2) {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+
+  .offer3 .offerCard span:nth-child(3) {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+  }
+
+  .offer3 .offerCard span:nth-child(4) {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+  }
+
   .gallery {
-    padding-inline: 6%;
+    padding-block: 40px;
+    padding-inline: 4%;
+  }
+
+  .gallery div:nth-child(1) {
+    font-size: clamp(1rem, 4vw, 1.2rem);
   }
 
   .gallery div:nth-child(2) {
-    font-size: 13px;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
   }
 
   .gallery > div:nth-child(3) div span {
@@ -1392,22 +2044,68 @@ nav #menuToggle:hover {
   .subscribe > div {
     left: 4%;
     width: 92%;
-    padding: 20px 16px;
+    padding: 16px 14px;
+  }
+
+  .subscribe > div > p {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  }
+
+  .subscribe > div > input {
+    font-size: clamp(0.75rem, 2vw, 0.8rem);
+    padding: 8px 14px;
+  }
+
+  .subscribe > div > button {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+    height: 40px;
+  }
+
+  .footer {
+    padding-top: 40px;
+    padding-inline: 4%;
+    gap: 24px;
   }
 
   .footer div:nth-child(1) span:nth-child(1) {
     margin-left: -20px;
+    gap: 10px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(2) {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+  }
+
+  .footer div:nth-child(2),
+  .footer div:nth-child(3),
+  .footer div:nth-child(4) {
+    gap: 6px;
+  }
+
+  .footer div:nth-child(2) span:nth-child(1),
+  .footer div:nth-child(3) span:nth-child(1),
+  .footer div:nth-child(4) span:nth-child(1) {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  }
+
+  .footer a {
+    font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+  }
+
+  .copyright {
+    padding: 14px 4%;
+    gap: 6px;
+  }
+
+  .copyright div:nth-child(2) {
     gap: 12px;
   }
 
- 
-
-  .footer div:nth-child(1) span:nth-child(2) {
-    font-size: 13px;
+  .copyright div:nth-child(2) a {
+    font-size: clamp(0.6rem, 1.8vw, 0.7rem);
   }
 }
 
-/* Small Mobile (320px - 424px) */
 @media (max-width: 424px) {
   .hero-image-container {
     padding: 12% 3%;
@@ -1419,21 +2117,26 @@ nav #menuToggle:hover {
   }
 
   #motto {
-    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    font-size: clamp(0.8rem, 3.5vw, 1rem);
+    margin-top: 4%;
   }
 
-  .hero-image-container > span {
-    font-size: 0.75rem;
+  .hero-image-container #heroText {
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+  }
+
+  .hero-image-container > span:not(#heroText) {
+    font-size: clamp(0.65rem, 2vw, 0.75rem);
   }
 
   .buttons {
     width: 90%;
-    margin-top: 12%;
+    margin-top: 10%;
   }
 
   .buttons a {
     padding: 10px 16px;
-    font-size: 0.8rem;
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
   }
 
   .carousel {
@@ -1449,7 +2152,7 @@ nav #menuToggle:hover {
     width: 100px;
     height: 35px;
     flex: 0 0 100px;
-    font-size: 45%;
+    font-size: clamp(0.35rem, 1.2vw, 0.45rem);
   }
 
   nav img {
@@ -1460,20 +2163,79 @@ nav #menuToggle:hover {
     font-size: 150%;
   }
 
-  .offer1 {
-    gap: 5px;
-
-    margin-bottom: 20px;
+  .aboutInfo {
+    padding-top: 30px;
+    gap: 10px;
   }
 
-  .offer3 div span:nth-child(3) {
-    font-size: 13px;
+  .about-heading {
+    font-size: clamp(1rem, 4vw, 1.1rem);
+  }
+
+  .about-heading span {
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
+    width: 32px;
+  }
+
+  .about-intro {
+    font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+  }
+
+  .about-desc {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+    line-height: 1.5;
+  }
+
+  .about-features span p {
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+  }
+
+  .about-features span i {
+    width: 22px;
+    height: 22px;
+    font-size: clamp(0.45rem, 1.5vw, 0.55rem);
+  }
+
+  .about-btn {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+    padding: 6px 16px;
+    height: 32px;
+  }
+
+  .offer {
+    padding-block: 30px;
+  }
+
+  .offer1 {
+    font-size: clamp(1rem, 4vw, 1.1rem);
+    margin-bottom: 12px;
+  }
+
+  .offer2 {
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+  }
+
+  .offer3 .offerCard {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .offer3 .offerCard span:nth-child(1) {
+    width: 32px;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+
+  .offer3 .offerCard span:nth-child(2) {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  }
+
+  .offer3 .offerCard span:nth-child(3) {
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
   }
 
   .gallery > div:nth-child(3) div span {
     width: 60px;
     flex: 0 0 60px;
-    border-width: 1px;
   }
 
   .gallery > div:nth-child(3) div {
@@ -1487,24 +2249,41 @@ nav #menuToggle:hover {
   .subscribe > div {
     left: 3%;
     width: 94%;
+    padding: 14px 12px;
+  }
+
+  .subscribe > div > p {
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+  }
+
+  .subscribe > div > input {
+    font-size: clamp(0.7rem, 2vw, 0.75rem);
+    padding: 8px 12px;
   }
 
   .subscribe > div > button {
-    height: 44px;
-  }
-
-  .copyright div:nth-child(2) {
-    gap: 12px;
-    font-size: 11px;
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+    height: 38px;
   }
 
   .footer {
-    padding-inline: 6%;
-    padding-top: 40px;
+    padding-top: 30px;
+    gap: 20px;
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(1) {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+  }
+
+  .footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(2) {
+    font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+  }
+
+  .copyright div:nth-child(2) {
+    gap: 10px;
   }
 }
 
-/* Extra Small Mobile (below 320px) */
 @media (max-width: 319px) {
   .hero-image-container {
     padding: 15% 2%;
@@ -1516,23 +2295,23 @@ nav #menuToggle:hover {
   }
 
   #motto {
-    font-size: 0.8rem;
+    font-size: clamp(0.7rem, 3vw, 0.8rem);
   }
 
   .hero-image-container > span {
-    font-size: 0.65rem;
+    font-size: clamp(0.6rem, 2vw, 0.7rem);
   }
 
   .buttons a {
     padding: 8px 12px;
-    font-size: 0.7rem;
+    font-size: clamp(0.6rem, 2vw, 0.7rem);
   }
 
   .innovation span {
     width: 80px;
     height: 30px;
     flex: 0 0 80px;
-    font-size: 40%;
+    font-size: clamp(0.3rem, 1vw, 0.4rem);
   }
 
   .innovation {
@@ -1542,9 +2321,33 @@ nav #menuToggle:hover {
   .mobileMenu {
     width: 100vw;
   }
+
+  .about-heading {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+  }
+
+  .about-intro {
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+  }
+
+  .about-desc {
+    font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+  }
+
+  .offer1 {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+  }
+
+  .offer2 {
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+  }
+
+  .gallery > div:nth-child(3) div span {
+    width: 50px;
+    flex: 0 0 50px;
+  }
 }
 
-/* Large Screens (1440px and above) */
 @media (min-width: 1440px) {
   .hero-image-container {
     padding: 5% 10%;
@@ -1581,6 +2384,6 @@ nav #menuToggle:hover {
     width: 200px;
     height: 60px;
     flex: 0 0 200px;
-    font-size: 65%;
+    font-size: 0.7rem;
   }
 }

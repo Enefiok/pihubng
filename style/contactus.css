@@ -4,10 +4,20 @@
   box-sizing: border-box;
 }
 
+/* SAFETY NET: Prevents any micro-overflow from forcing iOS to zoom out */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+
+
 body {
   display: flex;
   flex-direction: column;
   font-family: "poppins", sans-serif;
+  font-size: clamp(14px, 1.2vw, 16px);
 }
 
 :root {
@@ -15,8 +25,8 @@ body {
   --natural-color: white;
 }
 
-.page-link.active{
-  color:var(--primary-color)
+.page-link.active {
+  color: var(--primary-color);
 }
 
 nav {
@@ -28,9 +38,9 @@ nav {
     rgb(17, 15, 14),
     rgba(40, 38, 36, 0.6) 100%
   );
-  padding: 10px 7%;
+  padding: clamp(8px, 1.5vw, 10px) 7%;
   box-shadow: 0px 2px 4px rgba(8, 8, 8, 0.8);
-  position: fixed; /* was sticky */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -42,7 +52,7 @@ nav {
 
 nav div {
   display: flex;
-  gap: clamp(16px, 3vw, 40px); /* was 25% – caused overlap on mid screens */
+  gap: clamp(16px, 3vw, 40px);
 }
 
 nav a {
@@ -53,6 +63,7 @@ nav a {
   white-space: nowrap;
   position: relative;
   transition: color 0.25s ease;
+  font-size: clamp(14px, 1.5vw, 16px);
 }
 
 nav .links a::after {
@@ -77,12 +88,13 @@ nav .links a:hover::after {
 nav #contactUs {
   background-color: #fa7001;
   border-radius: 10px;
-  padding: 10px 20px;
+  padding: clamp(8px, 1.2vw, 10px) clamp(15px, 2vw, 20px);
   cursor: pointer;
   transition:
     background-color 0.25s ease,
     transform 0.25s ease,
     box-shadow 0.25s ease;
+  font-size: clamp(14px, 1.5vw, 16px);
 }
 
 nav #contactUs:hover {
@@ -96,7 +108,7 @@ nav span {
 }
 
 nav img {
-  width: 35px;
+  width: clamp(28px, 4vw, 35px);
   display: block;
   transition: transform 0.3s ease;
 }
@@ -121,7 +133,7 @@ nav #menuToggle:hover {
   transform: rotate(90deg);
 }
 
-/* MOBILE MENU (hidden by default, only used under 767px) */
+/* MOBILE MENU */
 .mobileMenu {
   position: fixed;
   top: 0;
@@ -131,7 +143,7 @@ nav #menuToggle:hover {
   background: rgb(17, 15, 14);
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: clamp(20px, 4vw, 28px);
   padding: 80px 30px;
   transform: translateX(100%);
   transition: transform 0.3s ease;
@@ -145,21 +157,21 @@ nav #menuToggle:hover {
 .mobileMenu a {
   text-decoration: none;
   color: white;
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2vw, 1.1rem);
   cursor: pointer;
 }
 
 .mobileMenu #mobileContactUs {
   background-color: var(--primary-color);
   border-radius: 10px;
-  padding: 12px 20px;
+  padding: clamp(10px, 1.5vw, 12px) clamp(15px, 2vw, 20px);
   text-align: center;
   width: fit-content;
 }
 
 #menuClose {
   color: white;
-  font-size: 150%;
+  font-size: clamp(120%, 2vw, 150%);
   cursor: pointer;
   align-self: flex-end;
   margin-bottom: 10px;
@@ -183,10 +195,12 @@ nav #menuToggle:hover {
 .heronav {
   background:
     linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
-    url("../src/image/profesional coders.jpg");
+    url("../src/image/workspace2.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 450px;
+  background-position: center;
+  background-attachment: fixed;
+  height: clamp(220px, 40vw, 450px);
   width: 100%;
 }
 
@@ -194,9 +208,9 @@ nav #menuToggle:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 25px;
+  font-size: clamp(16px, 4.5vw, 32px);
   color: white;
-  gap: 10px;
+  gap: clamp(8px, 1.5vw, 10px);
   height: 100%;
   opacity: 0;
   animation: heroFadeUp 0.8s ease forwards;
@@ -215,8 +229,10 @@ nav #menuToggle:hover {
 }
 
 .hero span {
-  width: max-content;
-  padding: 5px 10px;
+  width: fit-content;
+  max-width: 90%;
+  text-align: center;
+  padding: clamp(4px, 0.8vw, 5px) clamp(8px, 1.5vw, 10px);
   background-color: var(--primary-color);
   border-radius: 10px;
   display: grid;
@@ -235,58 +251,373 @@ nav #menuToggle:hover {
   display: grid;
   place-content: center;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  padding: 40px 7%;
+  gap: clamp(20px, 4vw, 30px);
+  padding: clamp(24px, 5vw, 40px) 7%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .contact1 {
   background-color: var(--primary-color);
   height: fit-content;
-  padding: 40px;
+  padding: clamp(20px, 4vw, 40px);
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  max-width: 100%;
   border-radius: 10px;
 }
 
 .contact2 {
   width: 100%;
+  max-width: 100%;
   border: 2px solid #f5f5f5;
   border-radius: 10px;
-  padding: 20px;
+  padding: clamp(16px, 3vw, 20px);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: clamp(16px, 2.5vw, 20px);
 }
 
 /* ============================================================ */
-/* SCROLL REVEAL                                                */
+/* CONTACT PAGE ANIMATIONS (Replicated from Offer Page)         */
 /* ============================================================ */
 
+/* Base Scroll Reveal */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(40px);
   transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
+    opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
 .scroll-reveal.show {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Contact 1 - Slide in from Left */
+.contact1.scroll-reveal {
+  transform: translateX(-60px);
+}
+.contact1.scroll-reveal.show {
+  transform: translateX(0);
+}
+
+/* Contact 2 - Slide in from Right */
 .contact2.scroll-reveal {
-  transition-delay: 0.15s;
+  transform: translateX(60px);
+}
+.contact2.scroll-reveal.show {
+  transform: translateX(0);
+}
+
+/* Staggered inner elements for Contact 1 (Info Rows) */
+.contact1 > div {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.contact1.show > div:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.2s;
+}
+.contact1.show > div:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.35s;
+}
+.contact1.show > div:nth-child(3) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.5s;
+}
+.contact1.show > div:nth-child(4) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.65s;
+}
+.contact1.show > div:nth-child(5) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.8s;
+}
+
+/* Staggered inner elements for Contact 2 (Form Fields) */
+.contact2 > div {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.contact2.show > div:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+.contact2.show > div:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+.contact2.show > div:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+.contact2.show > div:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+.contact2.show > div:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.contact2.show > div:nth-child(6) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
 }
 
 /* ============================================================ */
-/* CONTACT1 — icon rows hover                                   */
+/* FOOTER & COPYRIGHT ANIMATIONS                                */
 /* ============================================================ */
+.footer div:nth-child(1) {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition:
+    opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.footer div:nth-child(1).visible {
+  opacity: 1;
+  transform: translateX(0);
+}
 
+/* Footer Brand Text Stagger */
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(1) {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition:
+    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.footer div:nth-child(1) span:nth-child(1) p:nth-child(3) span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition:
+    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.footer
+  div:nth-child(1).visible
+  span:nth-child(1)
+  p:nth-child(3)
+  span:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+.footer
+  div:nth-child(1).visible
+  span:nth-child(1)
+  p:nth-child(3)
+  span:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.5s;
+}
+
+.footer div:nth-child(1) span:nth-child(2) {
+  opacity: 0;
+  transform: translateY(15px);
+  transition:
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.footer div:nth-child(1).visible span:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.footer div:nth-child(1) span:nth-child(3) {
+  opacity: 0;
+  transform: translateY(15px);
+  transition:
+    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.footer div:nth-child(1).visible span:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+/* Footer Link Columns */
+.footer div:nth-child(2),
+.footer div:nth-child(3),
+.footer div:nth-child(4) {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.footer div:nth-child(2).visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+.footer div:nth-child(3).visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.55s;
+}
+.footer div:nth-child(4).visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+/* Footer Links Stagger */
+.footer div:nth-child(2) a,
+.footer div:nth-child(3) a,
+.footer div:nth-child(4) a {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.footer div:nth-child(2).visible a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.footer div:nth-child(2).visible a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+.footer div:nth-child(2).visible a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+.footer div:nth-child(2).visible a:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+.footer div:nth-child(3).visible a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.footer div:nth-child(3).visible a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+.footer div:nth-child(3).visible a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+.footer div:nth-child(3).visible a:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+.footer div:nth-child(4).visible a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.footer div:nth-child(4).visible a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+.footer div:nth-child(4).visible a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+.footer div:nth-child(4).visible a:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+/* Copyright */
+.copyright div:nth-child(1) {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.copyright.visible div:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+
+.copyright div:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.copyright.visible div:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.5s;
+}
+
+.copyright div:nth-child(2) a {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.copyright.visible div:nth-child(2) a:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.copyright.visible div:nth-child(2) a:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+.copyright.visible div:nth-child(2) a:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+.copyright.visible div:nth-child(2) a:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+/* CONTACT1 */
 .contact1 > div:nth-child(3),
 .contact1 > div:nth-child(4),
 .contact1 > div:nth-child(5) {
@@ -320,10 +651,7 @@ nav #menuToggle:hover {
   color: #ffe0c2;
 }
 
-/* ============================================================ */
-/* CONTACT2 — form inputs + button                              */
-/* ============================================================ */
-
+/* CONTACT2 */
 .contact2 div input,
 .contact2 div textarea {
   transition:
@@ -358,7 +686,7 @@ nav #menuToggle:hover {
 
 .contact2 > div:nth-child(1) {
   font-weight: 600;
-  font-size: 25px;
+  font-size: clamp(18px, 3vw, 25px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -369,16 +697,8 @@ nav #menuToggle:hover {
   justify-content: space-between;
 }
 
-.contact2 > div:nth-child(3) {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact2 > div:nth-child(4) {
-  display: flex;
-  flex-direction: column;
-}
-
+.contact2 > div:nth-child(3),
+.contact2 > div:nth-child(4),
 .contact2 > div:nth-child(5) {
   display: flex;
   flex-direction: column;
@@ -389,28 +709,31 @@ nav #menuToggle:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: clamp(36px, 5vw, 40px);
   width: 100%;
   background-color: var(--primary-color);
   color: var(--natural-color);
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: clamp(15px, 2.5vw, 20px);
+  font-size: clamp(14px, 1.5vw, 16px);
 }
 
 .contact2 div label {
-  font-size: 14px;
+  font-size: clamp(12px, 1.5vw, 14px);
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: clamp(4px, 0.8vw, 5px);
 }
 
 .contact2 div input {
   border: 2px solid #f5f5f5;
-  padding: 10px;
+  padding: clamp(8px, 1.5vw, 10px);
   border-radius: 10px;
+  font-size: 16px;
 }
 
 .contact2 div textarea {
-  padding: 20px;
+  padding: clamp(14px, 2vw, 20px);
+  font-size: 16px;
 }
 
 .contact2 > div:nth-child(2) span {
@@ -419,134 +742,86 @@ nav #menuToggle:hover {
 }
 
 .contact1 > div:nth-child(1) {
-  font-size: 20px;
+  font-size: clamp(16px, 2.5vw, 20px);
 }
 
 .contact1 > div:nth-child(2) {
-  font-size: 14px;
-  margin-top: 20px;
+  font-size: clamp(12px, 1.8vw, 14px);
+  margin-top: clamp(14px, 2.5vw, 20px);
 }
 
-.contact1 > div:nth-child(3) {
-  display: flex;
-  gap: 20px;
-  margin-top: 40px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-.contact1 > div:nth-child(3) span {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact1 > div:nth-child(3) span a {
-  text-decoration: none;
-  color: white;
-  font-size: 12px;
-}
-
-.contact1 > div:nth-child(3) span p {
-  font-size: 10px;
-  color: #d6d6d6;
-}
-
-.contact1 > div:nth-child(3) i {
-  color: var(--primary-color);
-  background-color: var(--natural-color);
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 30px;
-}
-
-.contact1 > div:nth-child(4) {
-  display: flex;
-  gap: 20px;
-  margin-top: 40px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-.contact1 > div:nth-child(4) span {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact1 > div:nth-child(4) span a {
-  text-decoration: none;
-  color: white;
-  font-size: 12px;
-}
-
-.contact1 > div:nth-child(4) span p {
-  font-size: 10px;
-  color: #d6d6d6;
-}
-
-.contact1 > div:nth-child(4) i {
-  color: var(--primary-color);
-  background-color: var(--natural-color);
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 30px;
-}
-
+.contact1 > div:nth-child(3),
+.contact1 > div:nth-child(4),
 .contact1 > div:nth-child(5) {
   display: flex;
-  gap: 20px;
-  margin-top: 40px;
+  gap: clamp(12px, 2vw, 20px);
+  margin-top: clamp(22px, 4vw, 40px);
   align-items: center;
   justify-content: flex-start;
   width: 100%;
 }
 
+/* FIX FOR 360px OVERFLOW: Allows flex items to shrink and forces long emails/URLs to wrap */
+.contact1 > div:nth-child(3) span,
+.contact1 > div:nth-child(4) span,
 .contact1 > div:nth-child(5) span {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
+.contact1 > div:nth-child(3) span a,
+.contact1 > div:nth-child(4) span a {
+  text-decoration: none;
+  color: white;
+  font-size: clamp(11px, 1.5vw, 12px);
+  word-break: break-all;
+}
+
+.contact1 > div:nth-child(3) span p,
+.contact1 > div:nth-child(4) span p,
 .contact1 > div:nth-child(5) span p:nth-child(1) {
-  font-size: 10px;
+  font-size: clamp(9px, 1.2vw, 10px);
   color: #d6d6d6;
 }
 
 .contact1 > div:nth-child(5) span p:nth-child(2) {
   color: var(--natural-color);
-  font-size: 12px;
+  font-size: clamp(11px, 1.5vw, 12px);
 }
 
+.contact1 > div:nth-child(3) i,
+.contact1 > div:nth-child(4) i,
 .contact1 > div:nth-child(5) i {
   color: var(--primary-color);
   background-color: var(--natural-color);
   border-radius: 10px;
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 30px;
+  width: clamp(34px, 5vw, 40px);
+  height: clamp(26px, 4vw, 30px);
+  font-size: clamp(12px, 1.5vw, 14px);
+  flex-shrink: 0;
 }
 
 .footer {
   background-color: var(--primary-color);
   padding-inline: 7%;
-  padding-top: 100px;
-  padding-bottom: 20px;
+  padding-top: clamp(40px, 8vw, 100px);
+  padding-bottom: clamp(15px, 2vw, 20px);
   display: flex;
-  flex-wrap: wrap; /* was no-wrap by default, forced 4 columns at any width */
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 40px;
+  gap: clamp(20px, 4vw, 40px);
 }
 
 .footer div:nth-child(1) {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  min-width: 280px;
+  gap: clamp(15px, 2.5vw, 20px);
+  min-width: min(280px, 100%);
 }
 
 .footer div:nth-child(1) span:nth-child(1) {
@@ -557,7 +832,7 @@ nav #menuToggle:hover {
   color: var(--natural-color);
   flex-wrap: wrap;
   row-gap: 12px;
-  margin-left: -40px;
+  margin-left: clamp(-40px, -3vw, -15px);
 }
 
 .footer div:nth-child(1) span:nth-child(1) p:nth-child(1) {
@@ -588,22 +863,22 @@ nav #menuToggle:hover {
 }
 
 .footer div:nth-child(1) span:nth-child(2) {
-  width: 100%; /* was a fixed 400px */
+  width: 100%;
   max-width: 400px;
   display: block;
   color: var(--natural-color);
-  font-size: 14px;
+  font-size: clamp(13px, 1.5vw, 14px);
 }
 
 .footer div:nth-child(1) span:nth-child(3) {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: clamp(15px, 2.5vw, 20px);
 }
 
 .footer div:nth-child(1) span:nth-child(3) a {
   border: 1.5px solid var(--natural-color);
-  width: 20px;
+  width: clamp(18px, 2.5vw, 20px);
   aspect-ratio: 1;
   border-radius: 5px;
   display: flex;
@@ -624,14 +899,13 @@ nav #menuToggle:hover {
 .footer div:nth-child(4) {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  /* flex: 1 1 140px; */
+  gap: clamp(8px, 1.5vw, 10px);
 }
 
 .footer a {
   text-decoration: none;
   color: var(--natural-color);
-  font-size: 12px;
+  font-size: clamp(11px, 1.2vw, 12px);
   transition:
     color 0.25s ease,
     padding-left 0.25s ease;
@@ -642,10 +916,18 @@ nav #menuToggle:hover {
   padding-left: 4px;
 }
 
+.footer div:nth-child(3).visible a:nth-child(6) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s;
+}
+
 .footer div:nth-child(2) span:nth-child(1),
 .footer div:nth-child(3) span:nth-child(1),
 .footer div:nth-child(4) span:nth-child(1) {
   color: white;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 600;
 }
 
 .copyright {
@@ -653,12 +935,12 @@ nav #menuToggle:hover {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 20px 7%;
+  gap: clamp(10px, 2vw, 12px);
+  padding: clamp(15px, 2.5vw, 20px) 7%;
   background-color: var(--primary-color);
   border-top: 1px solid var(--natural-color);
   color: var(--natural-color);
-  font-size: 12px;
+  font-size: clamp(11px, 1.3vw, 12px);
 }
 
 .copyright a {
@@ -674,7 +956,23 @@ nav #menuToggle:hover {
 .copyright div:nth-child(2) {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: clamp(12px, 2vw, 20px);
+}
+
+/* Guarantee copyright parent becomes visible when triggered */
+.copyright.scroll-reveal.visible,
+.copyright.scroll-reveal.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+
+
+/* iOS SAFARI FIX */
+@media (max-width: 1024px) {
+  .heronav {
+    background-attachment: scroll;
+  }
 }
 
 @media (min-width: 768px) {
@@ -686,33 +984,28 @@ nav #menuToggle:hover {
 
 @media (max-width: 1024px) {
   .hero {
-    font-size: 32px;
+    font-size: clamp(22px, 3.5vw, 32px);
   }
 
   .footer {
-    padding-top: 70px;
-    gap: 20px;
-  }
-
-   .footer {
-    padding-top: 70px;
-    gap: 30px;
+    padding-top: clamp(50px, 7vw, 70px);
+    gap: clamp(20px, 3vw, 30px);
   }
 
   .footer div:nth-child(1) span:nth-child(1) {
-    margin-left: -25px; /* scaled down from -40px so the logo doesn't creep toward the edge as space tightens */
+    margin-left: clamp(-30px, -2.5vw, -25px);
   }
 
   .contact {
-    gap: 24px;
+    gap: clamp(20px, 3vw, 24px);
   }
 
   .contact1 {
-    padding: 30px;
+    padding: clamp(24px, 3.5vw, 30px);
   }
 
   .contact1 > div:nth-child(1) {
-    font-size: 18px;
+    font-size: clamp(16px, 2vw, 18px);
   }
 }
 
@@ -729,8 +1022,8 @@ nav #menuToggle:hover {
 
   .contact {
     grid-template-columns: 1fr;
-    padding: 40px 6%;
-    gap: 30px;
+    padding: clamp(30px, 5vw, 40px) 6%;
+    gap: clamp(24px, 4vw, 30px);
   }
 
   .contact1,
@@ -751,7 +1044,7 @@ nav #menuToggle:hover {
   nav #menuToggle {
     display: block;
     color: white;
-    font-size: 200%;
+    font-size: clamp(160%, 25vw, 200%);
     cursor: pointer;
   }
 
@@ -760,21 +1053,21 @@ nav #menuToggle:hover {
   }
 
   .heronav {
-    height: 320px;
+    height: clamp(260px, 35vw, 320px);
   }
 
   .hero {
-    font-size: 26px;
+    font-size: clamp(20px, 4vw, 26px);
   }
 
   .footer {
     flex-direction: column;
-    padding-top: 50px;
-    row-gap: 30px;
+    padding-top: clamp(40px, 6vw, 50px);
+    row-gap: clamp(24px, 4vw, 30px);
   }
 
   .footer div:nth-child(1) span:nth-child(1) {
-    margin-left: -15px;
+    margin-left: clamp(-20px, -2vw, -15px);
   }
 
   .footer div:nth-child(2),
@@ -786,7 +1079,7 @@ nav #menuToggle:hover {
   .copyright {
     flex-direction: column;
     text-align: center;
-    padding: 20px 6%;
+    padding: clamp(16px, 2.5vw, 20px) 6%;
   }
 
   .copyright div:nth-child(2) {
@@ -794,162 +1087,172 @@ nav #menuToggle:hover {
   }
 
   .contact {
-    padding: 30px 6%;
+    padding: clamp(24px, 4vw, 30px) 6%;
   }
 
   .contact1 {
-    padding: 24px;
+    padding: clamp(20px, 3vw, 24px);
   }
 
   .contact1 > div:nth-child(1) {
-    font-size: 17px;
+    font-size: clamp(15px, 2vw, 17px);
   }
 
   .contact1 > div:nth-child(2) {
-    font-size: 13px;
+    font-size: clamp(12px, 1.6vw, 13px);
   }
 
   .contact1 > div:nth-child(3),
   .contact1 > div:nth-child(4),
   .contact1 > div:nth-child(5) {
-    margin-top: 28px;
-    gap: 14px;
+    margin-top: clamp(24px, 3.5vw, 28px);
+    gap: clamp(12px, 1.8vw, 14px);
   }
 
-  /* First/Last name go from side-by-side to stacked */
   .contact2 > div:nth-child(2) {
     flex-direction: column;
-    gap: 16px;
+    gap: clamp(14px, 2vw, 16px);
   }
 
   .contact2 > div:nth-child(1) {
-    font-size: 22px;
+    font-size: clamp(20px, 2.8vw, 22px);
+  }
+
+  .footer div:nth-child(3).visible a:nth-child(6) {
+    transition-delay: 0.45s;
   }
 }
 
 @media (max-width: 575px) {
   .heronav {
-    height: 260px;
+    height: clamp(220px, 30vw, 260px);
   }
 
   .hero {
-    font-size: 22px;
-    gap: 8px;
+    font-size: clamp(18px, 3.5vw, 22px);
+    gap: clamp(6px, 1.2vw, 8px);
   }
 
   .hero span {
-    width: 60px;
-  }
-  .footer div:nth-child(1) span:nth-child(1) {
-    margin-left: -20px;
-    gap: 12px;
+    width: clamp(50px, 8vw, 60px);
   }
 
- 
+  .footer div:nth-child(1) span:nth-child(1) {
+    margin-left: clamp(-25px, -3vw, -20px);
+    gap: clamp(10px, 1.5vw, 12px);
+  }
 
   .footer div:nth-child(1) span:nth-child(2) {
-    font-size: 13px;
+    font-size: clamp(12px, 1.5vw, 13px);
   }
 
   .contact {
-    padding: 24px 5%;
-    gap: 24px;
+    padding: clamp(20px, 3vw, 24px) 5%;
+    gap: clamp(20px, 3vw, 24px);
   }
 
   .contact1 {
-    padding: 20px;
+    padding: clamp(16px, 2.5vw, 20px);
   }
 
   .contact1 > div:nth-child(1) {
-    font-size: 16px;
+    font-size: clamp(14px, 1.8vw, 16px);
   }
 
   .contact1 > div:nth-child(2) {
-    font-size: 12px;
-    margin-top: 14px;
+    font-size: clamp(11px, 1.4vw, 12px);
+    margin-top: clamp(12px, 1.8vw, 14px);
   }
 
   .contact1 > div:nth-child(3),
   .contact1 > div:nth-child(4),
   .contact1 > div:nth-child(5) {
-    margin-top: 22px;
-    gap: 12px;
+    margin-top: clamp(18px, 2.5vw, 22px);
+    gap: clamp(10px, 1.5vw, 12px);
   }
 
   .contact1 i {
-    width: 34px;
-    height: 26px;
-    font-size: 12px;
+    width: clamp(30px, 4.5vw, 34px);
+    height: clamp(24px, 3.5vw, 26px);
+    font-size: clamp(10px, 1.4vw, 12px);
   }
 
   .contact2 {
-    padding: 16px;
-    gap: 16px;
+    padding: clamp(14px, 2vw, 16px);
+    gap: clamp(14px, 2vw, 16px);
   }
 
   .contact2 > div:nth-child(1) {
-    font-size: 20px;
+    font-size: clamp(18px, 2.5vw, 20px);
   }
 
   .contact2 div input {
-    padding: 8px;
-    font-size: 13px;
+    padding: clamp(6px, 1vw, 8px);
+    font-size: 16px;
   }
 
   .contact2 div textarea {
-    padding: 14px;
-    font-size: 13px;
+    padding: clamp(12px, 1.8vw, 14px);
+    font-size: 16px;
   }
 }
 
 @media (max-width: 424px) {
   nav img {
-    width: 28px;
+    width: clamp(24px, 5vw, 28px);
   }
 
   nav #menuToggle {
-    font-size: 150%;
+    font-size: clamp(130%, 20vw, 150%);
   }
 
   .heronav {
-    height: 220px;
+    height: clamp(200px, 28vw, 220px);
   }
 
   .hero {
-    font-size: 18px;
+    font-size: clamp(16px, 3vw, 18px);
   }
 
   .footer {
     padding-inline: 6%;
-  }
-
- .footer {
-    padding-inline: 6%;
-    padding-top: 40px;
+    padding-top: clamp(30px, 5vw, 40px);
   }
 
   .copyright div:nth-child(2) {
-    gap: 12px;
-    font-size: 11px;
+    gap: clamp(10px, 1.5vw, 12px);
+    font-size: clamp(10px, 1.3vw, 11px);
   }
 
   .contact1 > div:nth-child(3) span a,
   .contact1 > div:nth-child(4) span a {
-    font-size: 11px;
+    font-size: clamp(10px, 1.3vw, 11px);
   }
 
   .contact1 > div:nth-child(3) span p,
   .contact1 > div:nth-child(4) span p,
   .contact1 > div:nth-child(5) span p:nth-child(1) {
-    font-size: 9px;
+    font-size: clamp(8px, 1.1vw, 9px);
   }
 
   .contact1 > div:nth-child(5) span p:nth-child(2) {
-    font-size: 11px;
+    font-size: clamp(10px, 1.3vw, 11px);
   }
 
   .contact2 > div:nth-child(1) {
-    font-size: 18px;
+    font-size: clamp(16px, 2.2vw, 18px);
+  }
+}
+
+@media (max-width: 360px) {
+  .contact1 {
+    width: clamp(50%, 90vw, 100%);
+    place-self: center;
+  }
+
+  .contact2 {
+    width: clamp(50%, 90vw, 100%);
+    place-self: center;
   }
 }
 
@@ -959,6 +1262,6 @@ nav #menuToggle:hover {
   }
 
   .hero {
-    font-size: 16px;
+    font-size: clamp(14px, 2.5vw, 16px);
   }
 }

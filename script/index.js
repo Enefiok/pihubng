@@ -1,5 +1,3 @@
-
-
 // ============================================================
 // MOBILE MENU
 // ============================================================
@@ -25,87 +23,37 @@ menuToggle.addEventListener("click", openMenu);
 menuClose.addEventListener("click", closeMenu);
 menuOverlay.addEventListener("click", closeMenu);
 
-// Close the menu whenever a nav link inside it is tapped
 mobileMenu.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", closeMenu);
+  link.addEventListener("click", (event) => {
+    if (!link.getAttribute("href")) {
+      event.preventDefault();
+    }
+    closeMenu();
+  });
 });
-
-// Keyboard support (Enter/Space) since the icons use role="button"
-menuToggle.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") openMenu();
-});
-
-menuClose.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") closeMenu();
-});
-
 
 // ============================================================
-// OFFER CARDS
+// SCROLL REVEAL
 // ============================================================
 
-// Note: the original version read `event.currentTarget` without
-// receiving `event` as a callback argument. This version keeps
-// your corrected implementation.
+const scrollRevealElements = document.querySelectorAll(".scroll-reveal");
 
-const offerCards = document.querySelectorAll(".offerCard");
-const supportsHover = window.matchMedia("(hover: hover)").matches;
-
-offerCards.forEach((offerCard) => {
-  if (supportsHover) {
-    // Mouse/trackpad: reveal on hover
-    offerCard.addEventListener("mouseenter", (event) => {
-      event.currentTarget.classList.add("hovered");
-    });
-
-    offerCard.addEventListener("mouseleave", (event) => {
-      event.currentTarget.classList.remove("hovered");
-    });
-  } else {
-    // Touch devices have no hover state, so tap toggles the card
-    offerCard.addEventListener("click", (event) => {
-      const card = event.currentTarget;
-      const alreadyOpen = card.classList.contains("hovered");
-
-      offerCards.forEach((c) => c.classList.remove("hovered"));
-
-      if (!alreadyOpen) {
-        card.classList.add("hovered");
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        revealObserver.unobserve(entry.target);
       }
     });
-  }
-});
+  },
+  { threshold: 0.15 }
+);
+
+scrollRevealElements.forEach((el) => revealObserver.observe(el));
 
 // ============================================================
-// OFFER CARD CLICK REDIRECT
-// ============================================================
-const offerCardq = document.querySelectorAll(".offer3 .offerCard");
-
-offerCardq.forEach((card) => {
-  card.addEventListener("click", () => {
-    window.location.href = "offer.html";
-  });
-});
-// ============================================================
-// SEE MORE BUTTON
-// ============================================================
-
-const seeMoreBtn = document.getElementById("seeMoreBtn");
-const offer3 = document.querySelector(".offer3");
-
-if (seeMoreBtn) {
-  seeMoreBtn.addEventListener("click", () => {
-    const isExpanded = offer3.classList.toggle("expanded");
-
-    seeMoreBtn.textContent = isExpanded ? "See less" : "See more";
-
-    seeMoreBtn.setAttribute("aria-expanded", isExpanded);
-  });
-}
-
-
-// ============================================================
-// GALLERY
+// GALLERY - Infinite scrolling carousel
 // ============================================================
 
 function buildSeamlessTrack(track) {
@@ -170,7 +118,6 @@ function initGalleryCarousels() {
 
 initGalleryCarousels();
 
-
 // Rebuild on resize
 let resizeTimer;
 
@@ -181,28 +128,165 @@ window.addEventListener("resize", () => {
 });
 
 // ============================================================
-// SCROLL REVEAL
+// SUBSCRIBE SECTION ANIMATION
 // ============================================================
 
-const scrollRevealElements =
-  document.querySelectorAll(".scroll-reveal");
-
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
+const subscribeElement = document.querySelector('.subscribe > div');
+if (subscribeElement) {
+  const subscribeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-
-        // Stop watching once the element has appeared
-        revealObserver.unobserve(entry.target);
+        entry.target.classList.add('visible');
+        subscribeObserver.unobserve(entry.target);
       }
     });
-  },
-  {
-    threshold: 0.15,
-  }
-);
+  }, {
+    threshold: 0.3,
+    rootMargin: '0px 0px -30px 0px'
+  });
+  subscribeObserver.observe(subscribeElement);
+}
 
-scrollRevealElements.forEach((element) => {
-  revealObserver.observe(element);
+// ============================================================
+// FOOTER ANIMATIONS
+// ============================================================
+
+const footerObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('show');
+      }, index * 100);
+      footerObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
 });
+
+document.querySelectorAll('.footer > div').forEach((el) => {
+  footerObserver.observe(el);
+});
+
+// ============================================================
+// COPYRIGHT ANIMATION
+// ============================================================
+
+const copyrightElement = document.querySelector('.copyright');
+
+if (copyrightElement) {
+  const copyrightObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        copyrightObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px 0px 0px'
+  });
+
+  copyrightObserver.observe(copyrightElement);
+
+  const forceCheck = () => {
+    const rect = copyrightElement.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      copyrightElement.classList.add('show');
+      copyrightObserver.unobserve(copyrightElement);
+    }
+  };
+  
+  forceCheck();
+  window.addEventListener('scroll', forceCheck, { passive: true });
+}
+
+// ============================================================
+// OFFER CARD NAVIGATION - Navigate to specific panel on offer page
+// ============================================================
+
+const offerCards = document.querySelectorAll('.offerCard');
+
+offerCards.forEach((card) => {
+  card.style.cursor = 'pointer';
+  
+  card.addEventListener('click', function(e) {
+    // Get the panel data attribute
+    const panel = this.dataset.panel;
+    
+    if (panel) {
+      // Store the target panel in localStorage
+      localStorage.setItem('targetPanel', panel);
+      
+      // Navigate to offer page
+      window.location.href = 'offer.html';
+    }
+  });
+  
+  // Also handle the "Learn More" span click
+  const learnMoreSpan = card.querySelector('span:last-child');
+  if (learnMoreSpan) {
+    learnMoreSpan.addEventListener('click', function(e) {
+      e.stopPropagation(); // Prevent double firing
+      const parentCard = this.closest('.offerCard');
+      const panel = parentCard.dataset.panel;
+      
+      if (panel) {
+        localStorage.setItem('targetPanel', panel);
+        window.location.href = 'offer.html';
+      }
+    });
+  }
+});
+
+
+
+
+// ============================================================
+// LEARN MORE BUTTON
+// ============================================================
+
+const aboutBtn = document.querySelector('.about-btn');
+if (aboutBtn) {
+  aboutBtn.addEventListener('click', () => {
+    window.location.href = 'about.html';
+  });
+}
+
+console.log('Home page animations fully initialized!');
+
+
+// ============================================================
+// OFFER CARDS - Stacked effect on mobile
+// ============================================================
+
+function handleCardStacking() {
+  const offerCards = document.querySelectorAll('.offer3 .offerCard');
+  const isMobile = window.innerWidth <= 767;
+  
+  // Remove stacked class from all cards
+  offerCards.forEach((card) => {
+    card.classList.remove('stacked');
+  });
+  
+  // Add stacked class to cards (except first) on mobile
+  if (isMobile) {
+    offerCards.forEach((card, index) => {
+      if (index > 0) {
+        card.classList.add('stacked');
+      }
+    });
+  }
+}
+
+// Run on load
+handleCardStacking();
+
+// Run on resize
+let stackResizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(stackResizeTimer);
+  stackResizeTimer = setTimeout(handleCardStacking, 200);
+});
+

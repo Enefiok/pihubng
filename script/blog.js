@@ -1,5 +1,3 @@
-
-
 // ============================================================
 // MOBILE MENU
 // ============================================================
@@ -53,6 +51,102 @@ const revealObserver = new IntersectionObserver(
 );
 
 scrollRevealElements.forEach((el) => revealObserver.observe(el));
+
+// ============================================================
+// OUR ARTICLES - Separate observer for heading
+// ============================================================
+
+const ourArticles = document.querySelector(".ourArticles");
+if (ourArticles) {
+  const headingObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          headingObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+  headingObserver.observe(ourArticles);
+}
+
+// ============================================================
+// SUBSCRIBE SECTION ANIMATION
+// ============================================================
+
+const subscribeElement = document.querySelector('.subscribe > div');
+if (subscribeElement) {
+  const subscribeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        subscribeObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.3,
+    rootMargin: '0px 0px -30px 0px'
+  });
+  subscribeObserver.observe(subscribeElement);
+}
+
+// ============================================================
+// FOOTER ANIMATIONS
+// ============================================================
+
+const footerObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('show');
+      }, index * 100);
+      footerObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+});
+
+document.querySelectorAll('.footer > div').forEach((el) => {
+  footerObserver.observe(el);
+});
+
+// ============================================================
+// COPYRIGHT ANIMATION
+// ============================================================
+
+const copyrightElement = document.querySelector('.copyright');
+
+if (copyrightElement) {
+  const copyrightObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        copyrightObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px 0px 0px'
+  });
+
+  copyrightObserver.observe(copyrightElement);
+
+  // Fallback force-check for bottom of page
+  const forceCheck = () => {
+    const rect = copyrightElement.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      copyrightElement.classList.add('show');
+      copyrightObserver.unobserve(copyrightElement);
+    }
+  };
+  
+  forceCheck();
+  window.addEventListener('scroll', forceCheck, { passive: true });
+}
 
 // ============================================================
 // CATEGORY TABS — animated filtering
@@ -139,8 +233,6 @@ function applySeeMoreLimit() {
     card.classList.toggle("overLimit", overLimit);
   });
 
-  // Button stays visible whenever there's more than the limit —
-  // its label/behavior changes instead of hiding it once expanded
   seeMoreBtn.classList.toggle("visible", needsButton);
   seeMoreBtn.textContent = seeMoreExpanded ? "See Less" : "See More";
   seeMoreBtn.setAttribute("aria-expanded", seeMoreExpanded);
@@ -154,8 +246,6 @@ seeMoreBtn.addEventListener("click", () => {
   seeMoreExpanded = !seeMoreExpanded;
   applySeeMoreLimit();
 
-  // When collapsing, scroll back up to the section so the user
-  // isn't left staring at empty space where the hidden cards were
   if (!seeMoreExpanded) {
     document.querySelector(".blogArticles").scrollIntoView({
       behavior: "smooth",
@@ -170,7 +260,6 @@ window.addEventListener("resize", () => {
 
 applySeeMoreLimit();
 
-
 // ============================================================
 // BLOG ARTICLE CLICK & REDIRECT
 // ============================================================
@@ -179,18 +268,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const articleCards = document.querySelectorAll(".article-card");
 
   articleCards.forEach((card) => {
-    // Make it look clickable
     card.style.cursor = "pointer";
 
     card.addEventListener("click", () => {
-      // 1. Extract data from the clicked card
       const imgSrc = card.querySelector("img").src;
       const title = card.querySelector(".card-title").textContent;
       const description = card.querySelector(".card-desc").textContent;
       const author = card.querySelector(".author").textContent;
       const date = card.querySelector(".date").textContent;
 
-      // 2. Save data to localStorage as a JSON string
       const articleData = {
         imgSrc,
         title,
@@ -200,10 +286,9 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       localStorage.setItem("currentArticle", JSON.stringify(articleData));
-
-      // 3. Navigate to the read page
-      // (Make sure "read.html" is the correct path relative to blog.html)
       window.location.href = "read.html"; 
     });
   });
 });
+
+console.log('Blog page animations fully initialized!');
