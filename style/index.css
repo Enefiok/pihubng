@@ -2387,3 +2387,89 @@ nav #menuToggle:hover {
     font-size: 0.7rem;
   }
 }
+
+/* ============================================================ */
+/* MOBILE GALLERY FIX                                            */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+    .gallery {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        min-height: 250px !important;
+        padding: 40px 4% !important;
+        background: #fff8f3 !important;
+        overflow: visible !important;
+    }
+    
+    .gallery > div:nth-child(1) {
+        font-size: clamp(1.2rem, 4vw, 1.5rem) !important;
+        font-weight: 700 !important;
+        color: #1a1a1a !important;
+    }
+    
+    .gallery > div:nth-child(2) {
+        font-size: clamp(0.85rem, 2vw, 0.95rem) !important;
+        text-align: center !important;
+        max-width: 400px !important;
+        margin-top: 12px !important;
+        color: #555 !important;
+    }
+    
+    .gallery > div:nth-child(3) {
+        overflow: visible !important;
+        width: 100% !important;
+        margin-top: 30px !important;
+        padding-block: 10px !important;
+    }
+    
+    .gallery > div:nth-child(3) > div {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 10px !important;
+        width: max-content !important;
+        animation-play-state: running !important;
+        will-change: unset !important;
+    }
+    
+    .gallery > div:nth-child(3) > div[data-direction="right"] {
+        animation: galleryScrollRight 20s linear infinite !important;
+    }
+    
+    .gallery > div:nth-child(3) > div[data-direction="left"] {
+        animation: galleryScrollLeft 25s linear infinite !important;
+    }
+    
+    .gallery > div:nth-child(3) div span {
+        width: 120px !important;
+        flex: 0 0 120px !important;
+        aspect-ratio: 1 !important;
+        background: #e0e0e0 !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        display: block !important;
+        position: relative !important;
+    }
+    
+    .gallery > div:nth-child(3) div span img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        pointer-events: none !important;
+        -webkit-user-drag: none !important;
+        user-select: none !important;
+    }
+    
+    /* Fix animations */
+    @keyframes galleryScrollRight {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
+    }
+    
+    @keyframes galleryScrollLeft {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+}
