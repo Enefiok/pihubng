@@ -7,6 +7,7 @@
 /* Apply smooth scrolling to the entire page */
 html {
   scroll-behavior: smooth;
+  overflow-x:clip
 }
 
 /* For browsers that support scroll-behavior */
@@ -20,6 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: "poppins", sans-serif;
+  overflow-x: clip; /* add this line */
 }
 
 :root {
@@ -218,11 +220,11 @@ nav #menuToggle:hover {
 
 .heronav {
   background:
-    linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(20, 20, 20, 1)),
     url("../src/image/profesional coders.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed;
+  background-position:center;
   height: 450px;
   width: 100%;
 }
@@ -1681,5 +1683,11 @@ nav #menuToggle:hover {
 
   .meet > div:nth-child(3) .meet1 p {
     width: 56px;
+  }
+}
+
+@media(min-width:1024px){
+  .heronav{
+    background-attachment:fixed
   }
 }

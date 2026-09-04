@@ -218,12 +218,11 @@ nav #menuToggle:hover {
 
 .heronav {
   background:
-    linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.95)),
     url("../src/image/Blog.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position:center;
-  background-attachment: fixed;
   height: 450px;
   width: 100%;
 }
@@ -1484,5 +1483,11 @@ nav #menuToggle:hover {
 
   .hero {
     font-size: 16px;
+  }
+}
+
+@media (min-width:1024px){
+  .heronav{
+    background-attachment:fixed
   }
 }

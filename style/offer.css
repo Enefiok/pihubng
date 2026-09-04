@@ -220,7 +220,6 @@ nav #menuToggle:hover {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   height: 450px;
   width: 100%;
   transition: background-image 0.4s ease;
@@ -229,13 +228,13 @@ nav #menuToggle:hover {
 .heronav,
 .heronav.panel-other {
   background-image:
-    linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95)),
     url("../src/image/workspace2.jpg");
 }
 
 .heronav.panel-workspace {
   background-image:
-    linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
+    linear-gradient(135deg,rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95)),
     url("../src/image/workspace.jpg");
 }
 
@@ -3961,5 +3960,11 @@ nav #menuToggle:hover {
     width: 96%;
     padding: 16px 12px;
     gap: 12px;
+  }
+}
+
+@media(min-width:1024px){
+  .heronav{
+    background-attachment:fixed
   }
 }

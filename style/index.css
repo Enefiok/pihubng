@@ -189,13 +189,13 @@ nav #menuToggle:hover {
 
 .heroNavbar {
   background:
-    linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.95)),
     url("../src/image/heroImage.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   padding-top: 74px;
@@ -210,7 +210,8 @@ nav #menuToggle:hover {
   padding: 5% 7%;
   flex: 1;
   text-align: center;
-  height: 100vh;
+  /* height: 100vh; */
+    min-height: calc(100dvh - 74px);
 }
 
 @keyframes fadeUp {
@@ -1403,6 +1404,11 @@ nav #menuToggle:hover {
   transform: translateX(0) !important;
 }
 
+/* Gallery tracks don't need scroll-reveal — they animate on their own */
+.galleryTrack.scroll-reveal {
+  opacity: 1 !important;
+}
+
 /* ============================================================ */
 /* RESPONSIVE - Footer & Copyright Mobile                       */
 /* ============================================================ */
@@ -2393,6 +2399,18 @@ nav #menuToggle:hover {
 /* ============================================================ */
 
 @media (max-width: 767px) {
+
+    .heroNavbar {
+    min-height: auto;
+  }
+
+  .hero-image-container {
+    min-height: auto;
+    justify-content: flex-start;
+    padding: 60px 5% 40px;
+  }
+
+  /* 
     .gallery {
         display: flex !important;
         flex-direction: column !important;
@@ -2460,7 +2478,7 @@ nav #menuToggle:hover {
         pointer-events: none !important;
         -webkit-user-drag: none !important;
         user-select: none !important;
-    }
+    } */
     
     /* Fix animations */
     @keyframes galleryScrollRight {
@@ -2472,4 +2490,11 @@ nav #menuToggle:hover {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
     }
+}
+
+
+@media(min-width:1024px){
+  .heronav{
+    background-attachment:fixed
+  }
 }

@@ -7,7 +7,7 @@
 /* SAFETY NET: Prevents any micro-overflow from forcing iOS to zoom out */
 html,
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100vw;
 }
 
@@ -194,12 +194,11 @@ nav #menuToggle:hover {
 
 .heronav {
   background:
-    linear-gradient(135deg, #000000, rgba(8, 8, 8, 0.9)),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.96), rgba(20, 20, 20, 0.95)),
     url("../src/image/workspace2.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   height: clamp(220px, 40vw, 450px);
   width: 100%;
 }
@@ -1263,5 +1262,11 @@ nav #menuToggle:hover {
 
   .hero {
     font-size: clamp(14px, 2.5vw, 16px);
+  }
+}
+
+@media (min-width:1024px){
+  .heronav{
+    background-attachment:fixed
   }
 }
